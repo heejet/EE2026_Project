@@ -1,0 +1,14 @@
+MouseAudioDisplay.sim
+*.log
+*.jou
+*.backup.log
+*.backup.jou
+*.dmp
+*.str
+.Xil
+MouseAudioDisplay.cache
+MouseAudioDisplay.hw
+MouseAudioDisplay.ip_user_files
+MouseAudioDisplay.runs
+MouseAudioDisplay.ipdefs
+archive_project_summary.txt
