@@ -12,9 +12,22 @@
 
 
 module Top_Student (
-    // Delete this comment and include Basys3 inputs and outputs here
+    input basys_clock,
+    input btn_C,
+    inout ps2_clk,  
+    inout ps2_data,
+    output reg [15:13] led
     );
-
-    // Delete this comment and write your codes and instantiations here
+    wire left, middle, right;
+    MouseCtl mouse_test(.clk(basys_clock), .rst(btn_C), .value(0), .setx(0), 
+                        .sety(0), .setmax_x(0), .setmax_y(0),
+                        .left(left), .middle(middle), .right(right),
+                        .ps2_clk(ps2_clk), .ps2_data(ps2_data));
+    
+    always @ (posedge basys_clock) begin
+        led[15] <= left;
+        led[14] <= middle;
+        led[13] <= right;
+    end
 
 endmodule
