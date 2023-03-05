@@ -25,7 +25,7 @@ module Top_Student (
     wire [12:0] pixel_index;
     
     wire clk6p25m;
-    clk_divider my_clk6p25m (.basys_clk(clock), .m(2499), .new_clk(clk6p25m));
+    clk_divider my_clk6p25m (.basys_clk(clock), .m(7), .new_clk(clk6p25m));
     
     Oled_Display oled_unit_one(
         .clk(clk6p25m), 
