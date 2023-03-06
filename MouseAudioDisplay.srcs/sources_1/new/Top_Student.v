@@ -13,7 +13,7 @@
 
 module Top_Student (
     // Delete this comment and include Basys3 inputs and outputs here
-    input clock,
+    input basys_clock,
     input [4:0] sw,
     output [7:0] JC
     );
@@ -22,15 +22,13 @@ module Top_Student (
     parameter RED = 16'hF800;
     parameter BLACK = 16'h0000;
     parameter WHITE = 16'hFFFF; 
-
-    // Delete this comment and write your codes and instantiations here
     
     reg [15:0] oled_data = (sw[4]) ? RED : GREEN;
     wire frame_begin, sending_pixels, sample_pixel;
     wire [12:0] pixel_index;
     
     wire clk6p25m;
-    clk_divider my_clk6p25m (.basys_clk(clock), .m(7), .new_clk(clk6p25m));
+    clk_divider my_clk6p25m(.basys_clk(basys_clock), .m(7), .new_clk(clk6p25m));
     
     Oled_Display oled_unit_one(
         .clk(clk6p25m), 
