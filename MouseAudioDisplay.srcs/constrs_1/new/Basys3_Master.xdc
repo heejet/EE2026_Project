@@ -4,22 +4,16 @@
 ## - rename the used ports (in each line, after get_ports) according to the top level signal names in the project
 
 ## Clock signal
-<<<<<<< HEAD
 set_property PACKAGE_PIN W5 [get_ports basys_clock]							
 	set_property IOSTANDARD LVCMOS33 [get_ports basys_clock]
 	create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports basys_clock]
-=======
-set_property PACKAGE_PIN W5 [get_ports clock]							
-	set_property IOSTANDARD LVCMOS33 [get_ports clock]
-	create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports clock]
->>>>>>> ace655c0a8d4cf6c2636287705b2d56b9843350d
  
 ## Switches
 #set_property PACKAGE_PIN V17 [get_ports {sw[0]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {sw[0]}]
 #set_property PACKAGE_PIN V16 [get_ports {sw[1]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {sw[1]}]
-#set_property PACKAGE_PIN W16 [get_ports {sw[2]}]					
+#set_property PACKAGE_PIN W16 [get_ports {sw[2]}]									
 	#set_property IOSTANDARD LVCMOS33 [get_ports {sw[2]}]
 #set_property PACKAGE_PIN W17 [get_ports {sw[3]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {sw[3]}]
@@ -111,8 +105,7 @@ set_property PACKAGE_PIN L1 [get_ports {led[15]}]
 	#set_property IOSTANDARD LVCMOS33 [get_ports {an[2]}]
 #set_property PACKAGE_PIN W4 [get_ports {an[3]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {an[3]}]
-
-
+	
 ##Buttons
 set_property PACKAGE_PIN U18 [get_ports btn_C]						
 	set_property IOSTANDARD LVCMOS33 [get_ports btn_C]
@@ -125,8 +118,6 @@ set_property PACKAGE_PIN U18 [get_ports btn_C]
 #set_property PACKAGE_PIN U17 [get_ports btnD]						
 	#set_property IOSTANDARD LVCMOS33 [get_ports btnD]
  
-
-
 ##Pmod Header JA
 ##Sch name = JA1
 #set_property PACKAGE_PIN J1 [get_ports {JA[0]}]					
@@ -235,8 +226,6 @@ set_property PACKAGE_PIN R18 [get_ports {JC[7]}]
 ##Sch name = XA4_N
 #set_property PACKAGE_PIN N1 [get_ports {JXADC[7]}]				
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JXADC[7]}]
-
-
 
 ##VGA Connector
 #set_property PACKAGE_PIN G19 [get_ports {vgaRed[0]}]				
