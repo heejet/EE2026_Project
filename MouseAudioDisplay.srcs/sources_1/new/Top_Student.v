@@ -27,18 +27,19 @@ module Top_Student (
     wire [5:0] cursor_y_pos;
     
     parameter [6:0] bound_x = 94;
-    
-    
-    wire [6:0] bound;
+    parameter [6:0] bound_y = 62;
+    reg [1:0] set_max_x = 0;
+    reg [1:0] set_max_y = 1;
+    reg [6:0] bound;
 
     MouseCtl mouse_control(
         .clk(basys_clk), 
         .rst(btn_C), 
-        .value(0), 
+        .value(bound), 
         .setx(0), 
         .sety(0),
-        .setmax_x(0), 
-        .setmax_y(0),
+        .setmax_x(set_max_x), 
+        .setmax_y(set_max_y),
         .left(mouse_left_btn), 
         .middle(mouse_middle_btn), 
         .right(mouse_right_btn),
@@ -47,6 +48,20 @@ module Top_Student (
         .xpos(cursor_x_pos),
         .ypos(cursor_y_pos)
     );
+    
+    always @ (posedge basys_clk) begin
+        set_max_x <= 1 - set_max_x;
+        set_max_y <= 1 - set_max_y;
+        if (set_max_x == 1) begin
+            bound <= bound_y;
+        end
+        else if (set_max_y == 1) begin
+            bound <= bound_x;
+        end
+        else begin 
+            bound <= 0;
+        end
+    end
     
     mouse_test mouse_tester (.basys_clk(basys_clk), .mouse_left_btn(mouse_left_btn), .mouse_middle_btn(mouse_middle_btn), .mouse_right_btn(mouse_right_btn), .led(led));
 
