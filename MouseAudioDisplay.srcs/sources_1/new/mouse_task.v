@@ -22,27 +22,41 @@
 
 module mouse_task(
     input basys_clk,
-    input btn_c
+    input clk6p25m,
+    input btn_C,
+    input [6:0] cursor_x_pos,
+    input [5:0] cursor_y_pos,
+    input [12:0] pixel_index_2,
+    output reg [15:0] oled_cursor_data
     );
-
-    wire [9:0] x_pos, y_pos;
-    wire left_btn, right_btn, middle_btn;
-
-    MouseCtl mouse_control(
-        .clk(basys_clock),
-        .rst(btn_C),
-        .value(0),
-        .setx(0), 
-        .sety(0),
-        .setmax_x(0),
-        .setmax_y(0),
-        .left(left_btn), 
-        .middle(middle_btn),
-        .right(right_btn),
-        .xpos(x_pos),
-        .ypos(y_pos),
-        .ps2_clk(ps2_clk),
-        .ps2_data(ps2_data)
-    );
+    
+    // Colours
+    parameter [15:0] RED = 16'b1111100000000000;
+    parameter [15:0] BLACK = 16'b0;
+    
+    //Get the x and y coord from pixel_index_2
+    wire [6:0] pixel_x;
+    wire [5:0] pixel_y;
+    
+    pixel_data_to_coordinate coverter (.pixel_index(pixel_index_2), .x_coord(pixel_x), .y_coord(pixel_y));
+    
+    //Invert x and y coordinates as screeen is upside down.
+    wire [6:0] pixel_x_correct;
+    wire [5:0] pixel_y_correct;
+    assign pixel_x_correct = 95 - pixel_x;
+    assign pixel_y_correct = 63 - pixel_y;
+    
+    always @ (posedge clk6p25m) begin
+        if ((pixel_x_correct == cursor_x_pos && pixel_y_correct == cursor_y_pos) || 
+            (pixel_x_correct == cursor_x_pos + 1 && pixel_y_correct == cursor_y_pos)||
+            (pixel_x_correct == cursor_x_pos && pixel_y_correct == cursor_y_pos + 1) ||
+            (pixel_x_correct == cursor_x_pos + 1 && pixel_y_correct == cursor_y_pos + 1)) begin
+            oled_cursor_data <= RED;
+        end
+        else begin
+            oled_cursor_data <= BLACK;
+        end
+    end
+    
 
 endmodule
