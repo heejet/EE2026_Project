@@ -26,11 +26,19 @@ module Top_Student (
     wire [6:0] cursor_x_pos;
     wire [5:0] cursor_y_pos;
     
+    wire frame_begin_2, sending_pixels_2, sample_pixel_2;
+    wire [12:0] pixel_index_2;
+    reg [15:0] oled_cursor_data = 0;
+    wire [15:0] oled_cursor_1_data;
+    wire [15:0] oled_cursor_2_data;
+    
     parameter [6:0] bound_x = 94;
     parameter [6:0] bound_y = 62;
     reg [1:0] set_max_x = 0;
     reg [1:0] set_max_y = 1;
     reg [6:0] bound;
+    
+    reg [1:0] toggle = 1;
 
     MouseCtl mouse_control(
         .clk(basys_clk), 
@@ -48,7 +56,6 @@ module Top_Student (
         .xpos(cursor_x_pos),
         .ypos(cursor_y_pos)
     );
-    
     always @ (posedge basys_clk) begin
         set_max_x <= 1 - set_max_x;
         set_max_y <= 1 - set_max_y;
@@ -58,8 +65,16 @@ module Top_Student (
         else if (set_max_y == 1) begin
             bound <= bound_x;
         end
-        else begin 
-            bound <= 0;
+        
+        if (mouse_middle_btn) begin
+            toggle <= 1 - toggle;
+        end
+         
+        if (toggle == 1) begin
+            oled_cursor_data <= oled_cursor_1_data;
+        end
+        else begin
+            oled_cursor_data <= oled_cursor_2_data;
         end
     end
     
@@ -90,10 +105,7 @@ module Top_Student (
         .vccen(JC[6]),
         .pmoden(JC[7])
     );
-    
-    wire frame_begin_2, sending_pixels_2, sample_pixel_2;
-    wire [12:0] pixel_index_2;
-    wire [15:0] oled_cursor_data;
+   
     
     Oled_Display oled_unit_two(
         .clk(clk6p25m), 
@@ -112,14 +124,24 @@ module Top_Student (
         .pmoden(JA[7])
     );
         
-    mouse_task cursor (
+    mouse_task cursor_1 (
         .basys_clk(basys_clk),
         .clk6p25m(clk6p25m),
         .btn_C(btn_C),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .pixel_index_2(pixel_index_2),
-        .oled_cursor_data(oled_cursor_data)
+        .oled_cursor_data(oled_cursor_1_data)
     );
     
+    mouse_task_larger cursor_2 (
+        .basys_clk(basys_clk),
+        .clk6p25m(clk6p25m),
+        .btn_C(btn_C),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .pixel_index_2(pixel_index_2),
+        .oled_cursor_data(oled_cursor_2_data)
+    );
+      
 endmodule
