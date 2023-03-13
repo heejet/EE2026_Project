@@ -4,15 +4,10 @@
 ## - rename the used ports (in each line, after get_ports) according to the top level signal names in the project
 
 ## Clock signal
-<<<<<<< HEAD
 set_property PACKAGE_PIN W5 [get_ports basys_clock]							
 	set_property IOSTANDARD LVCMOS33 [get_ports basys_clock]
 	create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports basys_clock]
-=======
-set_property PACKAGE_PIN W5 [get_ports clock]							
-	set_property IOSTANDARD LVCMOS33 [get_ports clock]
-	create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports clock]
->>>>>>> ace655c0a8d4cf6c2636287705b2d56b9843350d
+
  
 ## Switches
 #set_property PACKAGE_PIN V17 [get_ports {sw[0]}]					
@@ -76,12 +71,12 @@ set_property PACKAGE_PIN W15 [get_ports {sw4}]
 	#set_property IOSTANDARD LVCMOS33 [get_ports {led[11]}]
 #set_property PACKAGE_PIN P3 [get_ports {led[12]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {led[12]}]
-set_property PACKAGE_PIN N3 [get_ports {led[13]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {led[13]}]
-set_property PACKAGE_PIN P1 [get_ports {led[14]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {led[14]}]
-set_property PACKAGE_PIN L1 [get_ports {led[15]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {led[15]}]
+#set_property PACKAGE_PIN N3 [get_ports {led[13]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {led[13]}]
+#set_property PACKAGE_PIN P1 [get_ports {led[14]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {led[14]}]
+#set_property PACKAGE_PIN L1 [get_ports {led[15]}]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports {led[15]}]
 	
 	
 ##7 segment display
@@ -114,8 +109,8 @@ set_property PACKAGE_PIN L1 [get_ports {led[15]}]
 
 
 ##Buttons
-set_property PACKAGE_PIN U18 [get_ports btn_C]						
-	set_property IOSTANDARD LVCMOS33 [get_ports btn_C]
+#set_property PACKAGE_PIN U18 [get_ports btnC]						
+	#set_property IOSTANDARD LVCMOS33 [get_ports btnC]
 #set_property PACKAGE_PIN T18 [get_ports btnU]						
 	#set_property IOSTANDARD LVCMOS33 [get_ports btnU]
 #set_property PACKAGE_PIN W19 [get_ports btnL]						
@@ -212,17 +207,17 @@ set_property PACKAGE_PIN R18 [get_ports {JC[7]}]
 
 ##Pmod Header JXADC
 ##Sch name = XA1_P
-#set_property PACKAGE_PIN J3 [get_ports {JXADC[0]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JXADC[0]}]
-##Sch name = XA2_P
-#set_property PACKAGE_PIN L3 [get_ports {JXADC[1]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JXADC[1]}]
-##Sch name = XA3_P
-#set_property PACKAGE_PIN M2 [get_ports {JXADC[2]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JXADC[2]}]
-##Sch name = XA4_P
-#set_property PACKAGE_PIN N2 [get_ports {JXADC[3]}]				
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JXADC[3]}]
+set_property PACKAGE_PIN J3 [get_ports {nSYNC}]				
+	set_property IOSTANDARD LVCMOS33 [get_ports {nSYNC}]
+#Sch name = XA2_P
+set_property PACKAGE_PIN L3 [get_ports {D1}]				
+	set_property IOSTANDARD LVCMOS33 [get_ports {D1}]
+#Sch name = XA3_P
+set_property PACKAGE_PIN M2 [get_ports {D2}]				
+	set_property IOSTANDARD LVCMOS33 [get_ports {D2}]
+#Sch name = XA4_P
+set_property PACKAGE_PIN N2 [get_ports {CLK_OUT}]				
+	set_property IOSTANDARD LVCMOS33 [get_ports {CLK_OUT}]
 ##Sch name = XA1_N
 #set_property PACKAGE_PIN K3 [get_ports {JXADC[4]}]				
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JXADC[4]}]
@@ -277,12 +272,12 @@ set_property PACKAGE_PIN R18 [get_ports {JC[7]}]
 
 
 ##USB HID (PS/2)
-set_property PACKAGE_PIN C17 [get_ports ps2_clk]						
-	set_property IOSTANDARD LVCMOS33 [get_ports ps2_clk]
-	set_property PULLUP true [get_ports ps2_clk]
-set_property PACKAGE_PIN B17 [get_ports ps2_data]					
-	set_property IOSTANDARD LVCMOS33 [get_ports ps2_data]	
-	set_property PULLUP true [get_ports ps2_data]
+#set_property PACKAGE_PIN C17 [get_ports PS2Clk]						
+	#set_property IOSTANDARD LVCMOS33 [get_ports PS2Clk]
+	#set_property PULLUP true [get_ports PS2Clk]
+#set_property PACKAGE_PIN B17 [get_ports PS2Data]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports PS2Data]	
+	#set_property PULLUP true [get_ports PS2Data]
 
 
 ##Quad SPI Flash
