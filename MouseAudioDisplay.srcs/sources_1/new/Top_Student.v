@@ -16,10 +16,10 @@ module Top_Student (
     input btn_C,
     inout ps2_clk,  
     inout ps2_data,
-    input sw4,
+    input [4:0] sw,
     output [7:0] JC,
     output [7:0] JA,
-    output [15:13] led
+    output reg [15:0] led
     );
     // Mouse 
     wire mouse_left_btn, mouse_middle_btn, mouse_right_btn;
@@ -31,6 +31,7 @@ module Top_Student (
     reg [15:0] oled_cursor_data = 0;
     wire [15:0] oled_cursor_1_data;
     wire [15:0] oled_cursor_2_data;
+    wire [15:0] oled_cursor_team_data;
     
     parameter [6:0] bound_x = 94;
     parameter [6:0] bound_y = 62;
@@ -38,8 +39,8 @@ module Top_Student (
     reg [1:0] set_max_y = 1;
     reg [6:0] bound;
     
-    reg [1:0] toggle = 1;
-
+    reg toggle = 1;
+    
     MouseCtl mouse_control(
         .clk(basys_clk), 
         .rst(btn_C), 
@@ -56,39 +57,23 @@ module Top_Student (
         .xpos(cursor_x_pos),
         .ypos(cursor_y_pos)
     );
-    always @ (posedge basys_clk) begin
-        set_max_x <= 1 - set_max_x;
-        set_max_y <= 1 - set_max_y;
-        if (set_max_x == 1) begin
-            bound <= bound_y;
-        end
-        else if (set_max_y == 1) begin
-            bound <= bound_x;
-        end
-        
-        if (mouse_middle_btn) begin
-            toggle <= 1 - toggle;
-        end
-         
-        if (toggle == 1) begin
-            oled_cursor_data <= oled_cursor_1_data;
-        end
-        else begin
-            oled_cursor_data <= oled_cursor_2_data;
-        end
-    end
     
-    mouse_test mouse_tester (.basys_clk(basys_clk), .mouse_left_btn(mouse_left_btn), .mouse_middle_btn(mouse_middle_btn), .mouse_right_btn(mouse_right_btn), .led(led));
+    reg change = 0;
+    
+    // Display
 
-    // Display Test
-
-    reg [15:0] oled_data = (sw4) ? 16'hF800 : 16'h07E0;
+    wire [15:0] oled_data;
     wire frame_begin_1, sending_pixels_1, sample_pixel_1;
     wire [12:0] pixel_index_1;
+    
+    create_oled_7seg(.basys_clock(basys_clk),.sw(sw),.pixel_index(pixel_index_1), .oled_data(oled_data), .cursor_x_pos(cursor_x_pos), .cursor_y_pos(cursor_y_pos));
     
     wire clk6p25m;
     clk_divider my_clk6p25m(.basys_clk(basys_clk), .m(7), .new_clk(clk6p25m));
     
+    wire [14:0] toXOR;
+    get_segment(.cursor_x_pos(cursor_x_pos), .cursor_y_pos(cursor_y_pos), .mouse_left_btn(mouse_left_btn), .change(toXOR));       
+
     Oled_Display oled_unit_one(
         .clk(clk6p25m), 
         .reset(0), 
@@ -144,4 +129,24 @@ module Top_Student (
         .oled_cursor_data(oled_cursor_2_data)
     );
       
+    always @ (posedge basys_clk) begin
+        led[14:0] <= led[14:0] ^ toXOR;  
+        set_max_x <= 1 - set_max_x;
+        set_max_y <= 1 - set_max_y;
+        if (set_max_x == 1) begin
+            bound <= bound_y;
+        end
+        else if (set_max_y == 1) begin
+            bound <= bound_x;
+        end       
+        if (mouse_middle_btn) begin
+            toggle <= toggle + 1;
+        end         
+        if (toggle == 1) begin
+            oled_cursor_data <= oled_cursor_1_data;
+        end
+        else begin
+            oled_cursor_data <= oled_cursor_2_data;
+        end    
+    end   
 endmodule
