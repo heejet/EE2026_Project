@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module clk_divider(
+module clk_divider (
     input basys_clk,
     input [31:0] m,
     output reg new_clk = 0
