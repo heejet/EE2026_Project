@@ -27,7 +27,7 @@ module Group_Task(
     input btnC, 
     inout ps2_clk, ps2_data,
     
-    input led15,
+    output led15,
     
     output [3:0] an,
     output [7:0] seg,
@@ -39,6 +39,9 @@ module Group_Task(
 
     reg reset_flag = 0;
     
+    wire [6:0] cursor_x_pos;
+    wire [5:0] cursor_y_pos;
+    
     always @ (*) begin
         if (sw15) begin
             reset_flag <= 1;
@@ -48,20 +51,22 @@ module Group_Task(
         end
     end
 
-    reg [12:0] curr_display = 13'b0;
+    wire [12:0] curr_display;
+    wire [12:0] output_display;
     
     draw_module(
         .basys_clock(basys_clock), 
-        .sw0(sw0), 
-        .curr_display(curr_display), 
+        .sw0(sw0),
+        .curr_display(curr_display),
+        .output_display(output_display),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos), 
         .JC(JC)
     );
 
 //////////////////////////////////////////////////////////////////////////////////
     
     wire left, middle, right;
-    wire [6:0] cursor_x_pos;
-    wire [5:0] cursor_y_pos;
     
     MouseCtl mouse_control(
         .clk(basys_clock), 
@@ -81,24 +86,22 @@ module Group_Task(
     );
 
 //////////////////////////////////////////////////////////////////////////////////
-
-    wire [12:0] output_display;
     
     Mouse_Click MC(
-        .xpos(cursor_x_pos),
-        .ypos(cursor_y_pos),
-        .left(left),
-        .output_display(output_display)
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .mouse_left_btn(left),
+        .change(output_display)
     );
     
-    always @ (output_display, sw15) begin
-        if (~sw15 && reset_flag) begin
-            curr_display <= 13'b0;
-        end
-        else begin
-            curr_display <= curr_display ^ output_display;
-        end
-    end
+//    always @ (output_display, sw15) begin
+//        if (~sw15 && reset_flag) begin
+//            curr_display <= 13'b0;
+//        end
+//        else begin
+//            curr_display <= curr_display ^ output_display;
+//        end
+//    end
  
 //////////////////////////////////////////////////////////////////////////////////
  
@@ -106,6 +109,7 @@ module Group_Task(
     wire [3:0] digit_type; // 0 - 9 is valid, 10 is invalid
  
     is_valid_digit ivd(
+        .basys_clock(basys_clock),
         .curr_display(curr_display),
         .sw15(sw15),
         .is_valid(is_valid),
@@ -116,23 +120,23 @@ module Group_Task(
     
 //////////////////////////////////////////////////////////////////////////////////
 
-    Seven_segment SS(
-        .is_valid(is_valid),
-        .digit_type(digit_type),
-        .an(an),
-        .seg(seg)
-    );
+//    Seven_segment SS(
+//        .is_valid(is_valid),
+//        .digit_type(digit_type),
+//        .an(an),
+//        .seg(seg)
+//    );
     
 //////////////////////////////////////////////////////////////////////////////////
 
-    Speaker speaker(
-        .CLOCK(basys_clock),
-        .J1(JB[1]),
-        .J2(JB[2]),
-        .J3(JB[3]),
-        .J0(JB[0]),
-        .is_valid(is_valid),
-        .digit_type(digit_type)
-    );
+//    Speaker speaker(
+//        .CLOCK(basys_clock),
+//        .J1(JB[1]),
+//        .J2(JB[2]),
+//        .J3(JB[3]),
+//        .J0(JB[0]),
+//        .is_valid(is_valid),
+//        .digit_type(digit_type)
+//    );
  
 endmodule

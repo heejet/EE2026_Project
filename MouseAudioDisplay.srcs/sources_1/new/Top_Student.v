@@ -17,7 +17,7 @@ module Top_Student (
     inout ps2_clk,  
     inout ps2_data,
     input sw0, sw15,
-    input led15,
+    output led15,
     output [7:0] JC,
     output [3:0] an,
     output [7:0] seg,
