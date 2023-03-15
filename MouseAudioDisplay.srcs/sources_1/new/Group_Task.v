@@ -120,23 +120,24 @@ module Group_Task(
     
 //////////////////////////////////////////////////////////////////////////////////
 
-//    Seven_segment SS(
-//        .is_valid(is_valid),
-//        .digit_type(digit_type),
-//        .an(an),
-//        .seg(seg)
-//    );
+    Seven_segment SS(
+        .basys_clock(basys_clock),
+        .is_valid(is_valid),
+        .digit_type(digit_type),
+        .an(an),
+        .seg(seg)
+    );
     
 //////////////////////////////////////////////////////////////////////////////////
 
-//    Speaker speaker(
-//        .CLOCK(basys_clock),
-//        .J1(JB[1]),
-//        .J2(JB[2]),
-//        .J3(JB[3]),
-//        .J0(JB[0]),
-//        .is_valid(is_valid),
-//        .digit_type(digit_type)
-//    );
+    Speaker speaker(
+        .CLOCK(basys_clock),
+        .J1(JB[1]),
+        .J2(JB[2]),
+        .J3(JB[3]),
+        .J0(JB[0]),
+        .is_valid(is_valid),
+        .digit_type(digit_type)
+    );
  
 endmodule
