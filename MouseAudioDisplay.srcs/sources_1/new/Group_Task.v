@@ -57,6 +57,7 @@ module Group_Task(
     draw_module(
         .basys_clock(basys_clock), 
         .sw0(sw0),
+        .sw15(sw15),
         .curr_display(curr_display),
         .output_display(output_display),
         .cursor_x_pos(cursor_x_pos),
@@ -93,15 +94,6 @@ module Group_Task(
         .mouse_left_btn(left),
         .change(output_display)
     );
-    
-//    always @ (output_display, sw15) begin
-//        if (~sw15 && reset_flag) begin
-//            curr_display <= 13'b0;
-//        end
-//        else begin
-//            curr_display <= curr_display ^ output_display;
-//        end
-//    end
  
 //////////////////////////////////////////////////////////////////////////////////
  
@@ -131,7 +123,7 @@ module Group_Task(
 //////////////////////////////////////////////////////////////////////////////////
 
     Speaker speaker(
-        .CLOCK(basys_clock),
+        .basys_clock(basys_clock),
         .J1(JB[1]),
         .J2(JB[2]),
         .J3(JB[3]),

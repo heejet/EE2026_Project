@@ -22,7 +22,7 @@
 
 module draw_module(
     input basys_clock,
-    input sw0,
+    input sw0, sw15,
     output [12:0] curr_display,
     input [12:0] output_display,
     input [6:0] cursor_x_pos,
@@ -44,8 +44,21 @@ module draw_module(
     reg [12:0] display = 13'b0;
     assign curr_display = display;
     
+    reg reset_flag = 0;
+    
     always @ (posedge basys_clock) begin
-        display <= display ^ output_display;
+        if (sw15) begin
+            reset_flag <= 1;
+            display <= display ^ output_display;
+        end
+        else if (~sw15 && reset_flag) begin
+            display <= 13'b0;
+            reset_flag <= 0;
+        end
+        else begin
+            reset_flag <= 0;
+            display <= display ^ output_display;
+        end
     end
     
     Oled_Display oled_unit_one(

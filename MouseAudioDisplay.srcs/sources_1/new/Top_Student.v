@@ -32,7 +32,10 @@ module Top_Student (
         .btnC(btnC), 
         .ps2_clk(ps2_clk), 
         .ps2_data(ps2_data),
-        .led15(led15)
+        .led15(led15),
+        .an(an),
+        .seg(seg),
+        .JB(JB)
     );
 
 endmodule
