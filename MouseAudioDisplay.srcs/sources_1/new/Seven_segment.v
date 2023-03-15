@@ -56,7 +56,7 @@ module Seven_segment(
     reg [7:0] eight_seg_L = 8'b01000000;
     reg [7:0] eight_seg_R = 8'b10011000;
     
-    reg [7:0] nine_seg_L = 8'b01000000;
+    reg [7:0] nine_seg_L = 8'b01111001;
     reg [7:0] nine_seg_R = 8'b11000000; 
         
     reg [3:0] temp_an;
