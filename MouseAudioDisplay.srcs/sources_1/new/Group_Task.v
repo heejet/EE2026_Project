@@ -67,16 +67,22 @@ module Group_Task(
 
 //////////////////////////////////////////////////////////////////////////////////
     
+    parameter [6:0] bound_x = 94;
+    parameter [6:0] bound_y = 62;
+    reg setmax_x = 0;
+    reg setmax_y = 1;
+    reg [6:0] bound;
+    
     wire left, middle, right;
     
     MouseCtl mouse_control(
         .clk(basys_clock), 
         .rst(btnC), 
-        .value(0), 
+        .value(bound), 
         .setx(0), 
         .sety(0), 
-        .setmax_x(0), 
-        .setmax_y(0),
+        .setmax_x(setmax_x), 
+        .setmax_y(setmax_y),
         .left(left), 
         .middle(middle),
         .right(right),
@@ -85,6 +91,17 @@ module Group_Task(
         .xpos(cursor_x_pos),
         .ypos(cursor_y_pos)
     );
+    
+    always @ (posedge basys_clock) begin
+        setmax_x <= 1 - setmax_x;
+        setmax_y <= 1 - setmax_y;
+        if (setmax_x == 1) begin
+            bound <= bound_y;
+        end
+        else if (setmax_y == 1) begin
+            bound <= bound_x;
+        end
+    end
 
 //////////////////////////////////////////////////////////////////////////////////
     
