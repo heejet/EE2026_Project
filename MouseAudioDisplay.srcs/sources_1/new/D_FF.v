@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 13.03.2023 11:50:15
+// Create Date: 18.03.2023 09:42:01
 // Design Name: 
-// Module Name: debounce
+// Module Name: D_FF
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,16 +20,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module debounce(
-    input clock_25MHz, 
-    input input_signal, 
-    output output_signal
+module D_FF(
+    input clk,
+    input D,
+    output reg Q,
+    output reg QB
     );
-    wire Q_1, QB_1, Q_2, QB_2;
-    
-    D_FF ff_1 (.clk(clock_25MHz), .D(input_signal), .Q(Q_1), .QB(QB_1));
-    D_FF ff_2 (.clk(clock_25MHz), .D(Q_1), .Q(Q_2), .QB(QB_2));
-    
-    assign output_signal = Q_1 & QB_2;
-    
+    always @ (posedge clk) begin
+        Q <= D;
+        QB <= ~D;
+    end
 endmodule
