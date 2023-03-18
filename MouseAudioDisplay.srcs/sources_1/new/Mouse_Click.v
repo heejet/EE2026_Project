@@ -27,14 +27,9 @@ module Mouse_Click(
     input mouse_left_btn,
     output reg [12:0] change
 );
-    wire debounced_mouse;
-    
-    wire clk25mhz;
-    
-    debounce debounce_mouse_left_btn (.clock_25MHz(basys_clock), .input_signal(mouse_left_btn), .output_signal(debounced_mouse));
-  
+
     always @ (*) begin
-        if (debounced_mouse) begin
+        if (mouse_left_btn) begin
             if (cursor_x_pos >= 11 && cursor_x_pos <= 15 && cursor_y_pos >= 7 && cursor_y_pos <= 11) begin
                 change <= (1 << 0);
             end

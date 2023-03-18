@@ -23,11 +23,12 @@
 module draw_module(
     input basys_clock,
     input sw0, sw15,
-    output [12:0] curr_display,
     input [12:0] output_display,
     input [6:0] cursor_x_pos,
     input [5:0] cursor_y_pos,
-    output [7:0] JC
+    input [12:0] pixel_index,
+    output [12:0] curr_display,
+    output reg [15:0] oled_data
     );
     
     parameter GREEN = 16'h07E0;
@@ -36,11 +37,7 @@ module draw_module(
     
     wire clk25mhz;
     clk_divider my_clk25mhz(.basys_clk(basys_clock), .m(1), .new_clk(clk25mhz));
-    
-    reg [15:0] oled_data = 0;
-    wire frame_begin, sending_pixels, sample_pixel;
-    wire [12:0] pixel_index;
-    
+
     reg [12:0] display = 13'b0;
     assign curr_display = display;
     
@@ -60,23 +57,6 @@ module draw_module(
             display <= display ^ output_display;
         end
     end
-    
-    Oled_Display oled_unit_one(
-        .clk(clk25mhz), 
-        .reset(0), 
-        .frame_begin(frame_begin), 
-        .sending_pixels(sending_pixels), 
-        .sample_pixel(sample_pixel), 
-        .pixel_index(pixel_index), 
-        .pixel_data(oled_data), 
-        .cs(JC[0]), 
-        .sdin(JC[1]), 
-        .sclk(JC[3]), 
-        .d_cn(JC[4]), 
-        .resn(JC[5]), 
-        .vccen(JC[6]),
-        .pmoden(JC[7])
-    );
     
     wire [6:0] x;
     wire [5:0] y;
