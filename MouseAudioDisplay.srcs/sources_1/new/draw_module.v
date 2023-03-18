@@ -40,7 +40,7 @@ module draw_module(
 
     reg [12:0] display = 13'b0;
     assign curr_display = display;
-    
+     
     reg reset_flag = 0;
     
     always @ (posedge basys_clock) begin
