@@ -106,7 +106,12 @@ module Top_Student (
 //////////////////////////////////////////////////////////////////////////////////
 // Main Menu
 ////////////////////////////////////////////////////////////////////////////////// 
+    parameter [31:0] MAIN_MENU = 1;
+    parameter [31:0] GROUP_TASK = 2;
+    
+    wire [31:0] change_state;
     wire [15:0] oled_data_MM;
+    reg [31:0] current_state = MAIN_MENU;
     
     display_main_menu MM(
         .clk25mhz(clk25mhz),
@@ -115,24 +120,19 @@ module Top_Student (
         .pixel_index(pixel_index),
         .oled_data(oled_data_MM)
     );
+    
+    mouse_click_main_menu MC_MM(
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .mouse_left_btn(debounced_left),
+        .current_state(current_state),
+        .change_state(change_state)
+    );
+    
 //////////////////////////////////////////////////////////////////////////////////
 // Control
 //////////////////////////////////////////////////////////////////////////////////        
-    parameter [31:0] MAIN_MENU = 1;
-    parameter [31:0] GROUP_TASK = 2;
-    reg current_state = GROUP_TASK;
-    
-    always @ (current_state) begin
-        case (current_state)
-            MAIN_MENU: begin
-                oled_data <= oled_data_MM;
-            end
-            GROUP_TASK: begin
-                oled_data <= oled_data_GT;
-            end
-        endcase
-    end
-  
+     
     always @ (posedge basys_clock) begin
         setmax_x <= 1 - setmax_x;
         setmax_y <= 1 - setmax_y;
@@ -142,11 +142,12 @@ module Top_Student (
         else if (setmax_y == 1) begin
             bound <= bound_x;
         end
-        if (sw1) begin
-            oled_data <= oled_data_GT;
-        end
-        else begin
+        current_state <= change_state;
+        if (current_state == MAIN_MENU) begin
             oled_data <= oled_data_MM;
+        end
+        else if (current_state == GROUP_TASK) begin
+            oled_data <= oled_data_GT;
         end
     end
 //////////////////////////////////////////////////////////////////////////////////

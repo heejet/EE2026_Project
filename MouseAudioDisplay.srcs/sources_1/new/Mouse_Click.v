@@ -21,7 +21,6 @@
 
 
 module Mouse_Click(
-    input basys_clock,
     input [6:0] cursor_x_pos,
     input [5:0] cursor_y_pos,
     input mouse_left_btn,

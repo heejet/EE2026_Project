@@ -67,7 +67,6 @@ module Group_Task(
 //////////////////////////////////////////////////////////////////////////////////
     
     Mouse_Click MC(
-        .basys_clock(basys_clock),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(mouse_left_btn),
