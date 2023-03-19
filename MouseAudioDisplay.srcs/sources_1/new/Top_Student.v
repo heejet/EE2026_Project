@@ -128,6 +128,12 @@ module Top_Student (
 //////////////////////////////////////////////////////////////////////////////////
     wire [11:0] audio_out_IB;
     
+    Audio_Out_Individual_Task IB (
+        .basys_clock(basys_clock),
+        .sw0(sw0),
+        .btnC(btnC),
+        .audio_out_final(audio_out_IB)
+    );
 //////////////////////////////////////////////////////////////////////////////////
 // Student C: Computer Mouse Task
 //////////////////////////////////////////////////////////////////////////////////
@@ -247,7 +253,11 @@ module Top_Student (
                 oled_data <= oled_data_IM;
                 an <= 4'b1111;
                 seg <= 7'b1111_111;
-            end            
+            end
+            INDIVIDUAL_B: begin
+                oled_data <= 0;
+                audio_out <= audio_out_IB;
+            end
             INDIVIDUAL_C: begin
                 oled_data <= oled_data_IC;
                 an <= an_IC;
