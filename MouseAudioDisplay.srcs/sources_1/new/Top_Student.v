@@ -105,13 +105,8 @@ module Top_Student (
     );
 //////////////////////////////////////////////////////////////////////////////////
 // Main Menu
-////////////////////////////////////////////////////////////////////////////////// 
-    parameter [31:0] MAIN_MENU = 1;
-    parameter [31:0] GROUP_TASK = 2;
-    
-    wire [31:0] change_state;
-    wire [15:0] oled_data_MM;
-    reg [31:0] current_state = MAIN_MENU;
+//////////////////////////////////////////////////////////////////////////////////    
+    wire [15:0] oled_data_MM, oled_data_IM;
     
     display_main_menu MM(
         .clk25mhz(clk25mhz),
@@ -121,6 +116,27 @@ module Top_Student (
         .oled_data(oled_data_MM)
     );
     
+    Display_Individual_Menu IM(
+        .clk25mhz(clk25mhz),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .pixel_index(pixel_index),
+        .oled_data(oled_data_IM)
+    );    
+//////////////////////////////////////////////////////////////////////////////////
+// Control
+//////////////////////////////////////////////////////////////////////////////////        
+    parameter [31:0] MAIN_MENU = 1;
+    parameter [31:0] GROUP_TASK = 2;
+    parameter [31:0] INDIVIDUAL_MENU = 3;
+    parameter [31:0] INDIVIDUAL_A = 4;
+    parameter [31:0] INDIVIDUAL_B = 5;
+    parameter [31:0] INDIVIDUAL_C = 6;
+    parameter [31:0] INDIVIDUAL_D = 7;
+    
+    wire [31:0] change_state;
+    reg [31:0] current_state = MAIN_MENU;
+    
     mouse_click_main_menu MC_MM(
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
@@ -129,10 +145,6 @@ module Top_Student (
         .change_state(change_state)
     );
     
-//////////////////////////////////////////////////////////////////////////////////
-// Control
-//////////////////////////////////////////////////////////////////////////////////        
-     
     always @ (posedge basys_clock) begin
         setmax_x <= 1 - setmax_x;
         setmax_y <= 1 - setmax_y;
@@ -142,13 +154,20 @@ module Top_Student (
         else if (setmax_y == 1) begin
             bound <= bound_x;
         end
+        
         current_state <= change_state;
-        if (current_state == MAIN_MENU) begin
-            oled_data <= oled_data_MM;
-        end
-        else if (current_state == GROUP_TASK) begin
-            oled_data <= oled_data_GT;
-        end
+        
+        case (current_state)
+            MAIN_MENU: begin
+                oled_data <= oled_data_MM;
+            end
+            GROUP_TASK: begin
+                oled_data <= oled_data_GT;
+            end
+            INDIVIDUAL_MENU: begin
+                oled_data <= oled_data_IM;
+            end
+        endcase
     end
 //////////////////////////////////////////////////////////////////////////////////
 endmodule
