@@ -22,25 +22,22 @@
 
 module Group_Task(
     input basys_clock, sw0, sw15,
-    output [7:0] JC,
-    
+    input [6:0] cursor_x_pos,
+    input [5:0] cursor_y_pos,
+    input mouse_left_btn,
     input btnC, 
-    inout ps2_clk, ps2_data,
-    
+    input [12:0] pixel_index,
+
     output led15,
     
     output [3:0] an,
     output [7:0] seg,
-    
-    output [3:0] JB
+    output [15:0] oled_data
     );
     
 //////////////////////////////////////////////////////////////////////////////////
 
     reg reset_flag = 0;
-    
-    wire [6:0] cursor_x_pos;
-    wire [5:0] cursor_y_pos;
     
     always @ (*) begin
         if (sw15) begin
@@ -58,57 +55,20 @@ module Group_Task(
         .basys_clock(basys_clock), 
         .sw0(sw0),
         .sw15(sw15),
-        .curr_display(curr_display),
         .output_display(output_display),
         .cursor_x_pos(cursor_x_pos),
-        .cursor_y_pos(cursor_y_pos), 
-        .JC(JC)
+        .cursor_y_pos(cursor_y_pos),
+        .pixel_index(pixel_index),
+        .curr_display(curr_display),
+        .oled_data(oled_data)
     );
-
-//////////////////////////////////////////////////////////////////////////////////
-    
-    parameter [6:0] bound_x = 94;
-    parameter [6:0] bound_y = 62;
-    reg setmax_x = 0;
-    reg setmax_y = 1;
-    reg [6:0] bound;
-    
-    wire left, middle, right;
-    
-    MouseCtl mouse_control(
-        .clk(basys_clock), 
-        .rst(btnC), 
-        .value(bound), 
-        .setx(0), 
-        .sety(0), 
-        .setmax_x(setmax_x), 
-        .setmax_y(setmax_y),
-        .left(left), 
-        .middle(middle),
-        .right(right),
-        .ps2_clk(ps2_clk), 
-        .ps2_data(ps2_data),
-        .xpos(cursor_x_pos),
-        .ypos(cursor_y_pos)
-    );
-    
-    always @ (posedge basys_clock) begin
-        setmax_x <= 1 - setmax_x;
-        setmax_y <= 1 - setmax_y;
-        if (setmax_x == 1) begin
-            bound <= bound_y;
-        end
-        else if (setmax_y == 1) begin
-            bound <= bound_x;
-        end
-    end
 
 //////////////////////////////////////////////////////////////////////////////////
     
     Mouse_Click MC(
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
-        .mouse_left_btn(left),
+        .mouse_left_btn(mouse_left_btn),
         .change(output_display)
     );
  
@@ -139,14 +99,14 @@ module Group_Task(
     
 //////////////////////////////////////////////////////////////////////////////////
 
-    Speaker speaker(
-        .basys_clock(basys_clock),
-        .J1(JB[1]),
-        .J2(JB[2]),
-        .J3(JB[3]),
-        .J0(JB[0]),
-        .is_valid(is_valid),
-        .digit_type(digit_type)
-    );
+//    Speaker speaker(
+//        .basys_clock(basys_clock),
+//        .J1(JB[1]),
+//        .J2(JB[2]),
+//        .J3(JB[3]),
+//        .J0(JB[0]),
+//        .is_valid(is_valid),
+//        .digit_type(digit_type)
+//    );
  
 endmodule
