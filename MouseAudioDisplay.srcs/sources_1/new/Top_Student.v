@@ -91,6 +91,44 @@ module Top_Student (
         .pmoden(JC[7])
     );
 //////////////////////////////////////////////////////////////////////////////////
+// Set up Audio Output
+//////////////////////////////////////////////////////////////////////////////////
+    wire clock_50MHz, clock_20kHz, clock_190Hz, clock_380Hz, clock_25MHz;
+    
+    clk_divider clk_50MHz(.basys_clk(basys_clock), .m(0), .new_clk(clock_50MHz));
+    clk_divider clk_20kHz(.basys_clk(basys_clock), .m(2499), .new_clk(clock_20kHz));
+//    clk_divider clk_380Hz(.basys_clk(basys_clock), .m(131577), .new_clk(clock_380Hz));
+//    clk_divider clk_25MHz(.basys_clk(basys_clock), .m(1), .new_clk(clock_25MHz));
+    
+    reg [11:0] audio_out = 0;
+    
+    Audio_Output unit_my_audio_output (
+        .CLK(clock_50MHz),  
+        .START(clock_20kHz),
+        .DATA1(audio_out),
+        .DATA2(),
+        .RST(0),
+    
+        .D1(JB[1]),
+        .D2(JB[2]),
+        .CLK_OUT(JB[3]),
+        .nSYNC(JB[0]),
+        .DONE()
+    );
+//////////////////////////////////////////////////////////////////////////////////
+// Set up Audio Input
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// Student A: Audio Input Task
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// Student B: Audio Output Task
+//////////////////////////////////////////////////////////////////////////////////
+    wire [11:0] audio_out_IB;
+    
+//////////////////////////////////////////////////////////////////////////////////
 // Student C: Computer Mouse Task
 //////////////////////////////////////////////////////////////////////////////////
     wire [15:0] oled_data_IC;
@@ -127,7 +165,8 @@ module Top_Student (
 ////////////////////////////////////////////////////////////////////////////////// 
     wire [15:0] oled_data_GT;
     wire [7:0] seg_GT;
-    wire [3:0] JB_GT, an_GT;
+    wire [3:0] an_GT;
+    wire [11:0] audio_out_GT;
     
     Group_Task GT(
         .basys_clock(basys_clock), 
@@ -141,7 +180,8 @@ module Top_Student (
         .led15(led15),
         .an(an_GT),
         .seg(seg_GT),
-        .oled_data(oled_data_GT)
+        .oled_data(oled_data_GT),
+        .audio_out(audio_out_GT)
     );
 //////////////////////////////////////////////////////////////////////////////////
 // Main Menu
@@ -220,6 +260,7 @@ module Top_Student (
                 oled_data <= oled_data_GT;
                 an <= an_GT;
                 seg <= seg_GT;
+                audio_out <= audio_out_GT;
             end
             default: begin
                 oled_data <= 0;

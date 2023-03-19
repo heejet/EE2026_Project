@@ -32,7 +32,8 @@ module Group_Task(
     
     output [3:0] an,
     output [7:0] seg,
-    output [15:0] oled_data
+    output [15:0] oled_data,
+    output [11:0] audio_out
     );
     
 //////////////////////////////////////////////////////////////////////////////////
@@ -99,14 +100,11 @@ module Group_Task(
     
 //////////////////////////////////////////////////////////////////////////////////
 
-//    Speaker speaker(
-//        .basys_clock(basys_clock),
-//        .J1(JB[1]),
-//        .J2(JB[2]),
-//        .J3(JB[3]),
-//        .J0(JB[0]),
-//        .is_valid(is_valid),
-//        .digit_type(digit_type)
-//    );
+    Speaker speaker(
+        .basys_clock(basys_clock),
+        .is_valid(is_valid),
+        .digit_type(digit_type),
+        .audio_out(audio_out)
+    );
  
 endmodule
