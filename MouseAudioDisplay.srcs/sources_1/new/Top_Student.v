@@ -21,7 +21,11 @@ module Top_Student (
     output [7:0] JC,
     output reg [3:0] an,
     output reg [7:0] seg,
-    output [3:0] JB
+    output [3:0] JXADC,
+    input J_MIC3_Pin3, 
+    output J_MIC3_Pin1,
+    output J_MIC3_Pin4,
+    output reg [7:0] led
     );
     
 //////////////////////////////////////////////////////////////////////////////////
@@ -109,20 +113,43 @@ module Top_Student (
         .DATA2(),
         .RST(0),
     
-        .D1(JB[1]),
-        .D2(JB[2]),
-        .CLK_OUT(JB[3]),
-        .nSYNC(JB[0]),
+        .D1(JXADC[1]),
+        .D2(JXADC[2]),
+        .CLK_OUT(JXADC[3]),
+        .nSYNC(JXADC[0]),
         .DONE()
     );
 //////////////////////////////////////////////////////////////////////////////////
 // Set up Audio Input
 //////////////////////////////////////////////////////////////////////////////////
+    wire clk_sampleinterval; // f = 20kHz (sample interval for highest value in sampleframe)
+    wire [11:0] MIC_in;
 
+    clk_divider clk_sample_interval(basys_clock, 2499, clk_sampleinterval);
+    
+    Audio_Input audio_input(
+        .CLK(basys_clock),
+        .cs(clk_sampleinterval),
+        .MISO(J_MIC3_Pin3),
+        .clk_samp(J_MIC3_Pin1),
+        .sclk(J_MIC3_Pin4),
+        .sample(MIC_in)
+    );
 //////////////////////////////////////////////////////////////////////////////////
 // Student A: Audio Input Task
 //////////////////////////////////////////////////////////////////////////////////
-
+    reg [11:0] MIC_in_IA = 0;
+    wire [7:0] seg_IA;
+    wire [3:0] an_IA;
+    wire [8:0] led_IA;
+    
+    Audio_In_Individual_Task IA (
+        .clk_sampleinterval(clk_sampleinterval),
+        .MIC_in(MIC_in),
+        .an(an_IA),
+        .seg(seg_IA),
+        .led(led_IA)
+    );
 //////////////////////////////////////////////////////////////////////////////////
 // Student B: Audio Output Task
 //////////////////////////////////////////////////////////////////////////////////
@@ -253,6 +280,13 @@ module Top_Student (
                 oled_data <= oled_data_IM;
                 an <= 4'b1111;
                 seg <= 7'b1111_111;
+            end
+            INDIVIDUAL_A: begin
+                oled_data <= 0;
+                MIC_in_IA <= MIC_in;
+                an <= an_IA;
+                seg <= seg_IA;
+                led[7:0] <= led_IA;
             end
             INDIVIDUAL_B: begin
                 oled_data <= 0;
