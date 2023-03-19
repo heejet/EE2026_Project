@@ -27,8 +27,7 @@ module Group_Task(
     input mouse_left_btn,
     input btnC, 
     input [12:0] pixel_index,
-    inout ps2_clk, ps2_data,
-    
+
     output led15,
     
     output [3:0] an,

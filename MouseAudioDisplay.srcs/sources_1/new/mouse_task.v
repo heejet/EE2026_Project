@@ -21,12 +21,10 @@
 
 
 module mouse_task(
-    input basys_clk,
-    input clk6p25m,
-    input btn_C,
+    input clk25mhz,
     input [6:0] cursor_x_pos,
     input [5:0] cursor_y_pos,
-    input [12:0] pixel_index_2,
+    input [12:0] pixel_index,
     output reg [15:0] oled_cursor_data
     );
     
@@ -38,15 +36,15 @@ module mouse_task(
     wire [6:0] pixel_x;
     wire [5:0] pixel_y;
     
-    pixel_data_to_coordinate coverter (.pixel_index(pixel_index_2), .x_coord(pixel_x), .y_coord(pixel_y));
+    pixel_data_to_coordinate coverter (.pixel_index(pixel_index), .x_coord(pixel_x), .y_coord(pixel_y));
     
     //Invert x and y coordinates as screeen is upside down.
     wire [6:0] pixel_x_correct;
     wire [5:0] pixel_y_correct;
-    assign pixel_x_correct = 95 - pixel_x;
-    assign pixel_y_correct = 63 - pixel_y;
+    assign pixel_x_correct = pixel_x;
+    assign pixel_y_correct = pixel_y;
     
-    always @ (posedge clk6p25m) begin
+    always @ (posedge clk25mhz) begin
         if ((pixel_x_correct == cursor_x_pos && pixel_y_correct == cursor_y_pos) || 
             (pixel_x_correct == cursor_x_pos + 1 && pixel_y_correct == cursor_y_pos)||
             (pixel_x_correct == cursor_x_pos && pixel_y_correct == cursor_y_pos + 1) ||

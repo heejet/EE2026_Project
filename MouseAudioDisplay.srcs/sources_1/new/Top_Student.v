@@ -18,8 +18,8 @@ module Top_Student (
     input sw0, sw15, sw1,
     output led15,
     output [7:0] JC,
-    output [3:0] an,
-    output [7:0] seg,
+    output reg [3:0] an,
+    output reg [7:0] seg,
     output [3:0] JB
     );
     
@@ -52,8 +52,17 @@ module Top_Student (
         .xpos(cursor_x_pos),
         .ypos(cursor_y_pos)
     );
-    wire debounced_left;
-    debounce debounce_mouse_left_btn (.clock(basys_clock), .input_signal(left), .output_signal(debounced_left));
+    wire debounced_left, debounced_center;
+    debounce debounce_mouse_left_btn (
+        .clock(basys_clock), 
+        .input_signal(left), 
+        .output_signal(debounced_left)
+    );
+    debounce debounce_mouse_center_btn (
+        .clock(basys_clock), 
+        .input_signal(middle), 
+        .output_signal(debounced_center)
+    );
 //////////////////////////////////////////////////////////////////////////////////
 // Set up OLED
 ////////////////////////////////////////////////////////////////////////////////// 
@@ -81,10 +90,28 @@ module Top_Student (
         .pmoden(JC[7])
     );
 //////////////////////////////////////////////////////////////////////////////////
+// Student C: Computer Mouse Task
+//////////////////////////////////////////////////////////////////////////////////
+    wire [15:0] oled_data_IC;
+    wire [7:0] seg_IC;
+    wire [3:0] an_IC;
+    
+    Mouse_Individual_Task IC (
+        .basys_clock(basys_clock),
+        .clk25mhz(clk25mhz),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .mouse_center_btn(debounced_center), 
+        .pixel_index(pixel_index),
+        .an(an_IC),
+        .seg(seg_IC),
+        .oled_data(oled_data_IC)
+    );
+//////////////////////////////////////////////////////////////////////////////////
 // Group Task
 ////////////////////////////////////////////////////////////////////////////////// 
     wire [15:0] oled_data_GT;
-    wire [7:0] JC_GT, seg_GT;
+    wire [7:0] seg_GT;
     wire [3:0] JB_GT, an_GT;
     
     Group_Task GT(
@@ -96,11 +123,9 @@ module Top_Student (
         .mouse_left_btn(debounced_left), 
         .btnC(btnC),
         .pixel_index(pixel_index),
-        .ps2_clk(ps2_clk), 
-        .ps2_data(ps2_data),
         .led15(led15),
-        .an(an),
-        .seg(seg),
+        .an(an_GT),
+        .seg(seg_GT),
         .oled_data(oled_data_GT)
     );
 //////////////////////////////////////////////////////////////////////////////////
@@ -160,12 +185,26 @@ module Top_Student (
         case (current_state)
             MAIN_MENU: begin
                 oled_data <= oled_data_MM;
-            end
-            GROUP_TASK: begin
-                oled_data <= oled_data_GT;
+                an <= 4'b1111;
+                seg <= 7'b1111_111;
             end
             INDIVIDUAL_MENU: begin
                 oled_data <= oled_data_IM;
+                an <= 4'b1111;
+                seg <= 7'b1111_111;
+            end            
+            INDIVIDUAL_C: begin
+                oled_data <= oled_data_IC;
+                an <= an_IC;
+                seg <= seg_IC;
+            end
+            GROUP_TASK: begin
+                oled_data <= oled_data_GT;
+                an <= an_GT;
+                seg <= seg_GT;
+            end
+            default: begin
+                oled_data <= 0;
             end
         endcase
     end
