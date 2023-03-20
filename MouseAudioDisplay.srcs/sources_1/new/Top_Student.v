@@ -101,8 +101,6 @@ module Top_Student (
     
     clk_divider clk_50MHz(.basys_clk(basys_clock), .m(0), .new_clk(clock_50MHz));
     clk_divider clk_20kHz(.basys_clk(basys_clock), .m(2499), .new_clk(clock_20kHz));
-//    clk_divider clk_380Hz(.basys_clk(basys_clock), .m(131577), .new_clk(clock_380Hz));
-//    clk_divider clk_25MHz(.basys_clk(basys_clock), .m(1), .new_clk(clock_25MHz));
     
     reg [11:0] audio_out = 0;
     
@@ -217,6 +215,20 @@ module Top_Student (
         .audio_out(audio_out_GT)
     );
 //////////////////////////////////////////////////////////////////////////////////
+// Siuuumulator
+////////////////////////////////////////////////////////////////////////////////// 
+    wire [7:0] seg_SIU;
+    wire [3:0] an_SIU;
+    
+    Siu_Meter(
+        .basys_clock(basys_clock),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .mouse_left_btn(debounced_left),
+        .an(an_SIU),
+        .seg(seg_SIU)
+    );
+//////////////////////////////////////////////////////////////////////////////////
 // Main Menu
 //////////////////////////////////////////////////////////////////////////////////    
     wire [15:0] oled_data_MM, oled_data_IM;
@@ -246,6 +258,7 @@ module Top_Student (
     parameter [31:0] INDIVIDUAL_B = 5;
     parameter [31:0] INDIVIDUAL_C = 6;
     parameter [31:0] INDIVIDUAL_D = 7;
+    parameter [31:0] SIU = 8;
     
     wire [31:0] change_state;
     reg [31:0] current_state = MAIN_MENU;
@@ -268,7 +281,12 @@ module Top_Student (
             bound <= bound_x;
         end
         
-        current_state <= change_state;
+        if (sw0) begin
+            current_state <= SIU;
+        end
+        else begin
+            current_state <= change_state;
+        end
         
         case (current_state)
             MAIN_MENU: begin
@@ -305,6 +323,11 @@ module Top_Student (
                 an <= an_GT;
                 seg <= seg_GT;
                 audio_out <= audio_out_GT;
+            end
+            SIU: begin
+                oled_data <= 0;
+                an <= an_SIU;
+                seg <= seg_SIU;
             end
             default: begin
                 oled_data <= 0;

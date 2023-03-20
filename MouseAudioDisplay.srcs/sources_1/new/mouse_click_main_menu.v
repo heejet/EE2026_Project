@@ -34,6 +34,7 @@ module mouse_click_main_menu(
     parameter [31:0] INDIVIDUAL_B = 5;
     parameter [31:0] INDIVIDUAL_C = 6;
     parameter [31:0] INDIVIDUAL_D = 7;
+    parameter [31:0] SIU = 8;
     
     always @ (*) begin
         if (mouse_left_btn) begin
