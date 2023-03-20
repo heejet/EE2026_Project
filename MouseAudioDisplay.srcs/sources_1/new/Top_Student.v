@@ -33,14 +33,19 @@ module Top_Student (
 //////////////////////////////////////////////////////////////////////////////////  
     parameter [6:0] bound_x = 94;
     parameter [6:0] bound_y = 62;
+
     reg setmax_x = 0;
     reg setmax_y = 1;
-    reg [6:0] bound;
+    reg [10:0] bound;
     
     wire left, middle, right;
+    
+    wire [10:0] cursor_x_raw;
+    wire [10:0] cursor_y_raw;
+    
     wire [6:0] cursor_x_pos;
     wire [5:0] cursor_y_pos;
-    
+
     MouseCtl mouse_control(
         .clk(basys_clock), 
         .rst(btnC), 
@@ -54,15 +59,21 @@ module Top_Student (
         .right(right),
         .ps2_clk(ps2_clk), 
         .ps2_data(ps2_data),
-        .xpos(cursor_x_pos),
-        .ypos(cursor_y_pos)
+        .xpos(cursor_x_raw),
+        .ypos(cursor_y_raw)
     );
+    
+    assign cursor_x_pos = cursor_x_raw;
+    assign cursor_y_pos = cursor_y_raw;
+    
     wire debounced_left, debounced_center;
+    
     debounce debounce_mouse_left_btn (
         .clock(basys_clock), 
         .input_signal(left), 
         .output_signal(debounced_left)
     );
+    
     debounce debounce_mouse_center_btn (
         .clock(basys_clock), 
         .input_signal(middle), 
@@ -109,8 +120,7 @@ module Top_Student (
         .START(clock_20kHz),
         .DATA1(audio_out),
         .DATA2(),
-        .RST(0),
-    
+        .RST(0),    
         .D1(JXADC[1]),
         .D2(JXADC[2]),
         .CLK_OUT(JXADC[3]),
@@ -166,15 +176,23 @@ module Top_Student (
     wire [7:0] seg_IC;
     wire [3:0] an_IC;
     
+    wire [10:0] bound_x_IC;
+    wire [10:0] bound_y_IC;
+    
     Mouse_Individual_Task IC (
         .basys_clock(basys_clock),
         .clk25mhz(clk25mhz),
+        .cursor_x_raw(cursor_x_raw),
+        .cursor_y_raw(cursor_y_raw),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .mouse_center_btn(debounced_center), 
         .pixel_index(pixel_index),
+        .sw0(sw0),
         .an(an_IC),
         .seg(seg_IC),
+        .bound_x(bound_x_IC),
+        .bound_y(bound_y_IC),
         .oled_data(oled_data_IC)
     );
 //////////////////////////////////////////////////////////////////////////////////
@@ -275,18 +293,18 @@ module Top_Student (
         setmax_x <= 1 - setmax_x;
         setmax_y <= 1 - setmax_y;
         if (setmax_x == 1) begin
-            bound <= bound_y;
+            bound <= (current_state == INDIVIDUAL_C) ? bound_y_IC : bound_y;
         end
         else if (setmax_y == 1) begin
-            bound <= bound_x;
+            bound <= (current_state == INDIVIDUAL_C) ? bound_x_IC : bound_x;
         end
         
-        if (sw0) begin
-            current_state <= SIU;
-        end
-        else begin
+//        if (sw0) begin
+//            current_state <= SIU;
+//        end
+//        else begin
             current_state <= change_state;
-        end
+//        end
         
         case (current_state)
             MAIN_MENU: begin
