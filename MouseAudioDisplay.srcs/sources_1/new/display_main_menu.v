@@ -347,6 +347,8 @@ module display_main_menu(
                 1320: begin oled_data <= 16'b0010101000110010; end
                 1323: begin oled_data <= 16'b0010101000110010; end
                 1324: begin oled_data <= 16'b0010101000110010; end
+                1325: begin oled_data <= 16'b1111111111111111; end
+                1326: begin oled_data <= 16'b1111111111111111; end
                 1327: begin oled_data <= 16'b0010101000110010; end
                 1360: begin oled_data <= 16'b0010101000110010; end
                 1361: begin oled_data <= 16'b0010101000110010; end
@@ -2081,6 +2083,8 @@ module display_main_menu(
                     1320: begin oled_data <= 16'b0010101000110010; end
                     1323: begin oled_data <= 16'b0010101000110010; end
                     1324: begin oled_data <= 16'b0010101000110010; end
+                    1325: begin oled_data <= 16'b1111111111111111; end
+                    1326: begin oled_data <= 16'b1111111111111111; end
                     1327: begin oled_data <= 16'b0010101000110010; end
                     1360: begin oled_data <= 16'b0010101000110010; end
                     1361: begin oled_data <= 16'b0010101000110010; end
@@ -3814,6 +3818,8 @@ module display_main_menu(
             1320: begin oled_data <= 16'b0010101000110010; end
             1323: begin oled_data <= 16'b0010101000110010; end
             1324: begin oled_data <= 16'b0010101000110010; end
+            1325: begin oled_data <= 16'b1111111111111111; end
+            1326: begin oled_data <= 16'b1111111111111111; end
             1327: begin oled_data <= 16'b0010101000110010; end
             1360: begin oled_data <= 16'b0010101000110010; end
             1361: begin oled_data <= 16'b0010101000110010; end
