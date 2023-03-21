@@ -1,8 +1,8 @@
 from PIL import Image
 import numpy as np
 
-count = 35
-img = Image.open(f"./images/siuuuuu/siu ({count}).png")
+# count = 35
+img = Image.open(f"./images/j.png")
 img = np.array(img)
 
 # retrieved from https://stackoverflow.com/questions/1969240/mapping-a-range-of-values-to-another
@@ -23,7 +23,7 @@ output = ""
 
 i = 0
 
-for row in range(0, 64):
+for row in range(0, 50):
   for col in range(0, 96):
     R = int(translate(img[row][col][0], 0, 255, 0, 31))
     G = int(translate(img[row][col][1], 0, 255, 0, 63))

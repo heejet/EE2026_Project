@@ -219,14 +219,17 @@ module Top_Student (
 ////////////////////////////////////////////////////////////////////////////////// 
     wire [7:0] seg_SIU;
     wire [3:0] an_SIU;
+    wire [15:0] oled_data_SIU;
     
     Siu_Meter(
         .basys_clock(basys_clock),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(debounced_left),
+        .pixel_index(pixel_index),
         .an(an_SIU),
-        .seg(seg_SIU)
+        .seg(seg_SIU),
+        .oled_data(oled_data_SIU)
     );
 //////////////////////////////////////////////////////////////////////////////////
 // Main Menu
@@ -328,6 +331,7 @@ module Top_Student (
                 oled_data <= 0;
                 an <= an_SIU;
                 seg <= seg_SIU;
+                oled_data <= oled_data_SIU;
             end
             default: begin
                 oled_data <= 0;
