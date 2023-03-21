@@ -30,8 +30,8 @@ module Mouse_Individual_Task(
     input mouse_center_btn,
     input [12:0] pixel_index,
     input sw0,
-    output [3:0] an,
-    output [7:0] seg,
+    output reg [3:0] an,
+    output reg [7:0] seg,
     output reg [10:0] bound_x,
     output reg [10:0] bound_y,
     output reg [15:0] oled_data
@@ -89,6 +89,38 @@ module Mouse_Individual_Task(
         .cursor_y_out(cursor_y_slow)
     );
     
+    wire [7:0] x_normal_tens, x_normal_ones, y_normal_tens, y_normal_ones, x_slow_tens, x_slow_ones, y_slow_tens, y_slow_ones;
+    
+    Show_Coords get_x_normal (
+        .pos(cursor_x_pos),
+        .seg_tens(x_normal_tens),
+        .seg_ones(x_normal_ones)
+    );
+    
+    Show_Coords get_y_normal (
+        .pos(cursor_y_pos),
+        .seg_tens(y_normal_tens),
+        .seg_ones(y_normal_ones)
+    );
+    
+    Show_Coords get_x_slow (
+        .pos(cursor_x_slow),
+        .seg_tens(x_slow_tens),
+        .seg_ones(x_slow_ones)
+    );
+    
+    Show_Coords get_y_slow (
+        .pos(cursor_y_slow),
+        .seg_tens(y_slow_tens),
+        .seg_ones(y_slow_ones)
+    );
+    
+    reg [7:0] display_x_tens, display_x_ones, display_y_tens, display_y_ones;
+    
+    reg [2:0] step = 0;
+    
+    reg [31:0] count = 0;
+    
     always @ (posedge basys_clock) begin
         if (mouse_center_btn) begin
             toggle <= toggle + 1;
@@ -97,14 +129,40 @@ module Mouse_Individual_Task(
             bound_x <= bound_x_slow;
             bound_y <= bound_y_slow;
             oled_data <= (toggle == 0) ?  oled_cursor_1_slowed_data :  oled_cursor_2_slowed_data;
+            display_x_tens <= x_slow_tens;
+            display_x_ones <= x_slow_ones;
+            display_y_tens <= y_slow_tens;
+            display_y_ones <= y_slow_ones;
         end
         else begin
             bound_x <= bound_x_normal;
             bound_y <= bound_y_normal;
             oled_data <= (toggle == 0) ?  oled_cursor_1_data :  oled_cursor_2_data;
+            display_x_tens <= x_normal_tens;
+            display_x_ones <= x_normal_ones;
+            display_y_tens <= y_normal_tens;
+            display_y_ones <= y_normal_ones;
         end
+        
+        count <= (count == 249999) ? 0 : count + 1;
+        step <= (count == 0) ? (step == 3) ? 0 : step + 1 : step;
+        case (step)
+            0: begin
+                seg <= display_x_tens;
+                an <= 4'b0111;
+            end
+            1: begin
+                seg <= display_x_ones;
+                an <= 4'b1011;
+            end
+            2: begin
+                seg <= display_y_tens;
+                an <= 4'b1101;
+            end
+            3: begin
+                seg <= display_y_ones;
+                an <= 4'b1110;
+            end
+        endcase
     end
-
-    assign an = 4'b1111;
-    assign seg = 7'b1111_111;
 endmodule
