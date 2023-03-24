@@ -35,6 +35,9 @@ module mouse_click_main_menu(
     parameter [31:0] INDIVIDUAL_C = 6;
     parameter [31:0] INDIVIDUAL_D = 7;
     parameter [31:0] SIU = 8;
+    parameter [31:0] GROUP_MENU = 9;
+    parameter [31:0] GROUP_MENU2 = 10;
+    parameter [31:0] GRAPH_MENU = 11;
     
     always @ (*) begin
         if (mouse_left_btn) begin
@@ -48,7 +51,7 @@ module mouse_click_main_menu(
                     //  Group
                     else if ((cursor_x_pos >= 19 && cursor_x_pos <= 75) && 
                             (cursor_y_pos >= 41 && cursor_y_pos <= 51)) begin
-                        change_state <= GROUP_TASK;
+                        change_state <= GROUP_MENU;
                     end
                     else begin
                         change_state <= current_state;
@@ -79,6 +82,66 @@ module mouse_click_main_menu(
                     else if ((cursor_x_pos >= 29 && cursor_x_pos <= 64) && 
                             (cursor_y_pos >= 50 && cursor_y_pos <= 60)) begin
                         change_state <= MAIN_MENU;
+                    end
+                    else begin
+                        change_state <= current_state;
+                    end
+                end
+                GROUP_MENU: begin
+                    // integration
+                    if ((cursor_x_pos >= 16 && cursor_x_pos <= 78) && 
+                        (cursor_y_pos >= 19 && cursor_y_pos <= 29)) begin
+                        change_state <= GROUP_TASK;
+                    end
+                    //  graph algo
+                    else if ((cursor_x_pos >= 16 && cursor_x_pos <= 78) && 
+                            (cursor_y_pos >= 34 && cursor_y_pos <= 44)) begin
+                        change_state <= GRAPH_MENU;
+                    end
+                    //  back
+                    else if ((cursor_x_pos >= 16 && cursor_x_pos <= 44) && 
+                            (cursor_y_pos >= 49 && cursor_y_pos <= 59)) begin
+                        change_state <= MAIN_MENU;
+                    end
+                    //  next
+                    else if ((cursor_x_pos >= 50 && cursor_x_pos <= 78) && 
+                            (cursor_y_pos >= 49 && cursor_y_pos <= 58)) begin
+                        change_state <= GROUP_MENU2;
+                    end
+                    else begin
+                        change_state <= current_state;
+                    end
+                end
+                GROUP_MENU2: begin
+                    // siumulation
+                    if ((cursor_x_pos >= 16 && cursor_x_pos <= 78) && 
+                        (cursor_y_pos >= 19 && cursor_y_pos <= 29)) begin
+                        change_state <= SIU;
+                    end
+                    //  back
+                    else if ((cursor_x_pos >= 33 && cursor_x_pos <= 62) && 
+                            (cursor_y_pos >= 49 && cursor_y_pos <= 59)) begin
+                        change_state <= GROUP_MENU;
+                    end
+                    else begin
+                        change_state <= current_state;
+                    end
+                end
+                GRAPH_MENU: begin
+                    // directed
+                    if ((cursor_x_pos >= 16 && cursor_x_pos <= 78) && 
+                        (cursor_y_pos >= 19 && cursor_y_pos <= 29)) begin
+                        change_state <= current_state;
+                    end
+                    //  undirected
+                    else if ((cursor_x_pos >= 16 && cursor_x_pos <= 78) && 
+                            (cursor_y_pos >= 34 && cursor_y_pos <= 44)) begin
+                        change_state <= current_state;
+                    end
+                    //  back
+                    else if ((cursor_x_pos >= 33 && cursor_x_pos <= 62) && 
+                            (cursor_y_pos >= 49 && cursor_y_pos <= 59)) begin
+                        change_state <= GROUP_MENU;
                     end
                     else begin
                         change_state <= current_state;

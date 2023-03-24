@@ -249,7 +249,7 @@ module Top_Student (
 //////////////////////////////////////////////////////////////////////////////////
 // Main Menu
 //////////////////////////////////////////////////////////////////////////////////    
-    wire [15:0] oled_data_MM, oled_data_IM;
+    wire [15:0] oled_data_MM, oled_data_IM, oled_data_GM, oled_data_GM2, oled_data_GRAPH;
     
     display_main_menu MM(
         .clk25mhz(clk25mhz),
@@ -265,7 +265,28 @@ module Top_Student (
         .cursor_y_pos(cursor_y_pos),
         .pixel_index(pixel_index),
         .oled_data(oled_data_IM)
-    );    
+    );
+    Display_Group_Menu GM(
+        .clk25mhz(clk25mhz),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .pixel_index(pixel_index),
+        .oled_data(oled_data_GM)
+    );
+    Display_Group_Menu2 GM2(
+        .clk25mhz(clk25mhz),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .pixel_index(pixel_index),
+        .oled_data(oled_data_GM2)
+    );
+    Display_Graph_Menu GRAPH(
+        .clk25mhz(clk25mhz),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .pixel_index(pixel_index),
+        .oled_data(oled_data_GRAPH)
+    );
 //////////////////////////////////////////////////////////////////////////////////
 // Control
 //////////////////////////////////////////////////////////////////////////////////        
@@ -277,6 +298,9 @@ module Top_Student (
     parameter [31:0] INDIVIDUAL_C = 6;
     parameter [31:0] INDIVIDUAL_D = 7;
     parameter [31:0] SIU = 8;
+    parameter [31:0] GROUP_MENU = 9;
+    parameter [31:0] GROUP_MENU2 = 10;
+    parameter [31:0] GRAPH_MENU = 11;
     
     wire [31:0] change_state;
     reg [31:0] current_state = MAIN_MENU;
@@ -346,6 +370,15 @@ module Top_Student (
                 oled_data <= 0;
                 an <= an_SIU;
                 seg <= seg_SIU;
+            end
+            GROUP_MENU: begin
+                oled_data <= oled_data_GM;
+            end
+            GROUP_MENU2: begin
+                oled_data <= oled_data_GM2;
+            end
+            GRAPH_MENU: begin
+                oled_data <= oled_data_GRAPH;
             end
             default: begin
                 oled_data <= 0;
