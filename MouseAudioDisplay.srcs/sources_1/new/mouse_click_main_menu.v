@@ -38,6 +38,8 @@ module mouse_click_main_menu(
     parameter [31:0] GROUP_MENU = 9;
     parameter [31:0] GROUP_MENU2 = 10;
     parameter [31:0] GRAPH_MENU = 11;
+    parameter [31:0] DIRECTED_GRAPH = 12;
+    parameter [31:0] UNDIRECTED_GRAPH = 13;
     
     always @ (*) begin
         if (mouse_left_btn) begin
@@ -131,12 +133,12 @@ module mouse_click_main_menu(
                     // directed
                     if ((cursor_x_pos >= 16 && cursor_x_pos <= 78) && 
                         (cursor_y_pos >= 19 && cursor_y_pos <= 29)) begin
-                        change_state <= current_state;
+                        change_state <= DIRECTED_GRAPH;
                     end
                     //  undirected
                     else if ((cursor_x_pos >= 16 && cursor_x_pos <= 78) && 
                             (cursor_y_pos >= 34 && cursor_y_pos <= 44)) begin
-                        change_state <= current_state;
+                        change_state <= UNDIRECTED_GRAPH;
                     end
                     //  back
                     else if ((cursor_x_pos >= 33 && cursor_x_pos <= 62) && 

@@ -14,10 +14,14 @@ module Top_Student (
     // Delete this comment and include Basys3 inputs and outputs here
     input basys_clock,
     input btnC,
+    input btnU,
+    input btnD,
+    input btnL,
+    input btnR,
     inout ps2_clk,  
     inout ps2_data,
-    input sw0, sw15, sw1, sw2, sw3,
-    output led15,
+    input [15:0] sw,
+    output reg led15,
     output [7:0] JC,
     output reg [3:0] an,
     output reg [7:0] seg,
@@ -165,7 +169,7 @@ module Top_Student (
     
     Audio_Out_Individual_Task IB (
         .basys_clock(basys_clock),
-        .sw0(sw0),
+        .sw0(sw[0]),
         .btnC(btnC),
         .audio_out_final(audio_out_IB)
     );
@@ -188,7 +192,7 @@ module Top_Student (
         .cursor_y_pos(cursor_y_pos),
         .mouse_center_btn(debounced_center), 
         .pixel_index(pixel_index),
-        .sw0(sw0),
+        .sw0(sw[0]),
         .an(an_IC),
         .seg(seg_IC),
         .bound_x(bound_x_IC),
@@ -202,10 +206,10 @@ module Top_Student (
     
     Oled_Individual_Task ID (
         .clk25mhz(clk25mhz),
-        .sw0(sw0),
-        .sw1(sw1),
-        .sw2(sw2),
-        .sw3(sw3),
+        .sw0(sw[0]),
+        .sw1(sw[1]),
+        .sw2(sw[2]),
+        .sw3(sw[3]),
         .pixel_index(pixel_index),
         .oled_data(oled_data_ID)
     );
@@ -216,17 +220,18 @@ module Top_Student (
     wire [7:0] seg_GT;
     wire [3:0] an_GT;
     wire [11:0] audio_out_GT;
+    wire led15_GT;
     
     Group_Task GT(
         .basys_clock(basys_clock), 
-        .sw0(sw0),
-        .sw15(sw15),
+        .sw0(sw[0]),
+        .sw15(sw[15]),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(debounced_left), 
         .btnC(btnC),
         .pixel_index(pixel_index),
-        .led15(led15),
+        .led15(led15_GT),
         .an(an_GT),
         .seg(seg_GT),
         .oled_data(oled_data_GT),
@@ -246,6 +251,42 @@ module Top_Student (
         .an(an_SIU),
         .seg(seg_SIU)
     );
+//////////////////////////////////////////////////////////////////////////////////
+// Graph Algos
+//////////////////////////////////////////////////////////////////////////////////
+    wire debounced_btnL, debounced_btnR, debounced_btnU, debounced_btnD;
+    debounce debounceL (.clock(basys_clock), .input_signal(btnL), .output_signal(debounced_btnL));
+    debounce debounceR (.clock(basys_clock), .input_signal(btnR), .output_signal(debounced_btnR));
+    debounce debounceU (.clock(basys_clock), .input_signal(btnU), .output_signal(debounced_btnU));
+    debounce debounceD (.clock(basys_clock), .input_signal(btnD), .output_signal(debounced_btnD));
+    
+    wire [6:0] directed_seg, undirected_seg;
+    wire [3:0] directed_an, undirected_an;
+    wire directed_is_cyclic;
+    
+    Directed show_directed_graph(
+        .basys_clock(basys_clock),
+        .sw(sw),
+        .btnU(debounced_btnU),
+        .btnD(debounced_btnD),
+        .btnL(debounced_btnL),
+        .btnR(debounced_btnR),
+        .seg(directed_seg),
+        .an(directed_an),
+        .is_cyclic(directed_is_cyclic)
+    );
+    
+    Undirected show_undirected_graph(
+        .basys_clock(basys_clock),
+        .sw(sw),
+        .btnU(debounced_btnU),
+        .btnD(debounced_btnD),
+        .btnL(debounced_btnL),
+        .btnR(debounced_btnR),
+        .seg(undirected_seg),
+        .an(undirected_an)
+    );
+
 //////////////////////////////////////////////////////////////////////////////////
 // Main Menu
 //////////////////////////////////////////////////////////////////////////////////    
@@ -301,6 +342,8 @@ module Top_Student (
     parameter [31:0] GROUP_MENU = 9;
     parameter [31:0] GROUP_MENU2 = 10;
     parameter [31:0] GRAPH_MENU = 11;
+    parameter [31:0] DIRECTED_GRAPH = 12;
+    parameter [31:0] UNDIRECTED_GRAPH = 13;
     
     wire [31:0] change_state;
     reg [31:0] current_state = MAIN_MENU;
@@ -364,6 +407,7 @@ module Top_Student (
                 oled_data <= oled_data_GT;
                 an <= an_GT;
                 seg <= seg_GT;
+                led15 <= led15_GT;
                 audio_out <= audio_out_GT;
             end
             SIU: begin
@@ -379,6 +423,19 @@ module Top_Student (
             end
             GRAPH_MENU: begin
                 oled_data <= oled_data_GRAPH;
+            end
+            DIRECTED_GRAPH: begin
+                oled_data <= 0;
+                an <= directed_an;
+                seg [6:0] <= directed_seg;
+                seg[7] <= 1;
+                led15 <= directed_is_cyclic;
+            end
+            UNDIRECTED_GRAPH: begin
+                oled_data <= 0;
+                an <= undirected_an;
+                seg [6:0] <= undirected_seg;
+                seg[7] <= 1;
             end
             default: begin
                 oled_data <= 0;
