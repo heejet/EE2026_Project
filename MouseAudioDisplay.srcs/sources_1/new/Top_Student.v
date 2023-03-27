@@ -33,6 +33,16 @@ module Top_Student (
     );
     
 //////////////////////////////////////////////////////////////////////////////////
+// Set up L, R, U, D buttons
+//////////////////////////////////////////////////////////////////////////////////  
+
+    wire debounced_btnL, debounced_btnR, debounced_btnU, debounced_btnD;
+    debounce debounceL (.clock(basys_clock), .input_signal(btnL), .output_signal(debounced_btnL));
+    debounce debounceR (.clock(basys_clock), .input_signal(btnR), .output_signal(debounced_btnR));
+    debounce debounceU (.clock(basys_clock), .input_signal(btnU), .output_signal(debounced_btnU));
+    debounce debounceD (.clock(basys_clock), .input_signal(btnD), .output_signal(debounced_btnD));
+    
+//////////////////////////////////////////////////////////////////////////////////
 // Set up mouse
 //////////////////////////////////////////////////////////////////////////////////  
     parameter [6:0] bound_x = 94;
@@ -242,24 +252,22 @@ module Top_Student (
 ////////////////////////////////////////////////////////////////////////////////// 
     wire [7:0] seg_SIU;
     wire [3:0] an_SIU;
+    wire [15:0] oled_data_SIU;
     
     Siu_Meter(
         .basys_clock(basys_clock),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(debounced_left),
+        .reset_btn(debounced_btnD),
+        .pixel_index(pixel_index),
         .an(an_SIU),
-        .seg(seg_SIU)
+        .seg(seg_SIU),
+        .oled_data(oled_data_SIU)
     );
 //////////////////////////////////////////////////////////////////////////////////
 // Graph Algos
-//////////////////////////////////////////////////////////////////////////////////
-    wire debounced_btnL, debounced_btnR, debounced_btnU, debounced_btnD;
-    debounce debounceL (.clock(basys_clock), .input_signal(btnL), .output_signal(debounced_btnL));
-    debounce debounceR (.clock(basys_clock), .input_signal(btnR), .output_signal(debounced_btnR));
-    debounce debounceU (.clock(basys_clock), .input_signal(btnU), .output_signal(debounced_btnU));
-    debounce debounceD (.clock(basys_clock), .input_signal(btnD), .output_signal(debounced_btnD));
-    
+//////////////////////////////////////////////////////////////////////////////////    
     wire [6:0] directed_seg, undirected_seg;
     wire [3:0] directed_an, undirected_an;
     wire directed_is_cyclic;
@@ -366,12 +374,7 @@ module Top_Student (
             bound <= (current_state == INDIVIDUAL_C) ? bound_x_IC : bound_x;
         end
         
-//        if (sw0) begin
-//            current_state <= SIU;
-//        end
-//        else begin
-            current_state <= change_state;
-//        end
+        current_state <= change_state;
         
         case (current_state)
             MAIN_MENU: begin
@@ -411,7 +414,7 @@ module Top_Student (
                 audio_out <= audio_out_GT;
             end
             SIU: begin
-                oled_data <= 0;
+                oled_data <= oled_data_SIU;
                 an <= an_SIU;
                 seg <= seg_SIU;
             end
