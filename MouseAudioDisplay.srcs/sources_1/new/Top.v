@@ -195,7 +195,7 @@ output reg [7:0] led
     wire [3:0] directed_an, undirected_an;
     wire directed_is_cyclic;
     
-    wire [15:0] oled_data_DG;
+    wire [15:0] oled_data_DG_1, oled_data_DG_2;
 
     Directed show_directed_graph(
         .basys_clock(basys_clock),
@@ -204,10 +204,12 @@ output reg [7:0] led
         .btnD(debounced_btnD),
         .btnL(debounced_btnL),
         .btnR(debounced_btnR),
-        .pixel_index(pixel_index_1),
+        .pixel_index_1(pixel_index_1),
+        .pixel_index_2(pixel_index_2),
         .seg(directed_seg),
         .an(directed_an),
-        .oled_data_1(oled_data_DG),
+        .oled_data_1(oled_data_DG_1),
+        .oled_data_2(oled_data_DG_2),
         .is_cyclic(directed_is_cyclic)
     );
     
@@ -243,8 +245,8 @@ output reg [7:0] led
         
         an <= directed_an;
         seg <= directed_seg;
-        oled_data_1 <= oled_data_UG_1;
-        oled_data_2 <= oled_data_UG_2;
+        oled_data_1 <= oled_data_DG_1;
+        oled_data_2 <= oled_data_DG_2;
     end
 
 ////////////////////////////////////////////////////////////////////////////////// 

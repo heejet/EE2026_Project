@@ -717,7 +717,9 @@ module Undirected(
     
     end
     
-    integer i = 1152; // down one row
+    integer row_shift = 1152; // down one row
+    integer column_shift = 45; // right three column
+    
     
     // Oled 2 Display
     always @ (posedge basys_clock) begin
@@ -1923,75 +1925,668 @@ module Undirected(
     case(weights_1)
     1: begin
         case(pixel_index_2)
-        5142 - i: oled_data_2 <= 16'b1111111111111111;
-        5143 - i: oled_data_2 <= 16'b1111111111111111;
-        5144 - i: oled_data_2 <= 16'b1111111111111111;
-        5239 - i: oled_data_2 <= 16'b1111111111111111;
-        5335 - i: oled_data_2 <= 16'b1111111111111111;
-        5431 - i: oled_data_2 <= 16'b1111111111111111;
-        5432 - i: oled_data_2 <= 16'b1111111111111111;
-        5527 - i: oled_data_2 <= 16'b1111111111111111;
+        5142 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5143 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5144 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5239 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5335 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5431 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5432 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5527 - row_shift: oled_data_2 <= 16'b1111111111111111;
         endcase
     end
     2: begin
         case(pixel_index_2)
-        5142 - i: oled_data_2 <= 16'b1111111111111111;
-        5143 - i: oled_data_2 <= 16'b1111111111111111;
-        5144 - i: oled_data_2 <= 16'b1111111111111111;
-        5145 - i: oled_data_2 <= 16'b1111111111111111;
-        5240 - i: oled_data_2 <= 16'b1111111111111111;
-        5335 - i: oled_data_2 <= 16'b1111111111111111;
-        5430 - i: oled_data_2 <= 16'b1111111111111111;
-        5433 - i: oled_data_2 <= 16'b1111111111111111;
-        5527 - i: oled_data_2 <= 16'b1111111111111111;
-        5528 - i: oled_data_2 <= 16'b1111111111111111;
+        5142 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5143 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5144 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5145 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5240 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5335 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5430 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5433 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5527 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5528 - row_shift: oled_data_2 <= 16'b1111111111111111;
         endcase
     end
     3: begin
         case(pixel_index_2)
-        5143 - i: oled_data_2 <= 16'b1111111111111111;
-        5144 - i: oled_data_2 <= 16'b1111111111111111;
-        5238 - i: oled_data_2 <= 16'b1111111111111111;
-        5241 - i: oled_data_2 <= 16'b1111111111111111;
-        5335 - i: oled_data_2 <= 16'b1111111111111111;
-        5430 - i: oled_data_2 <= 16'b1111111111111111;
-        5433 - i: oled_data_2 <= 16'b1111111111111111;
-        5527 - i: oled_data_2 <= 16'b1111111111111111;
-        5528 - i: oled_data_2 <= 16'b1111111111111111;
+        5143 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5144 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5238 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5241 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5335 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5430 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5433 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5527 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5528 - row_shift: oled_data_2 <= 16'b1111111111111111;
         endcase
     end
     4: begin
         case(pixel_index_2)
-        5143 - i: oled_data_2 <= 16'b1111111111111111;
-        5238 - i: oled_data_2 <= 16'b1111111111111111;
-        5239 - i: oled_data_2 <= 16'b1111111111111111;
-        5240 - i: oled_data_2 <= 16'b1111111111111111;
-        5241 - i: oled_data_2 <= 16'b1111111111111111;
-        5335 - i: oled_data_2 <= 16'b1111111111111111;
-        5337 - i: oled_data_2 <= 16'b1111111111111111;
-        5431 - i: oled_data_2 <= 16'b1111111111111111;
-        5432 - i: oled_data_2 <= 16'b1111111111111111;
-        5527 - i: oled_data_2 <= 16'b1111111111111111;
+        5143 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5238 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5239 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5240 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5241 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5335 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5337 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5431 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5432 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5527 - row_shift: oled_data_2 <= 16'b1111111111111111;
         endcase
     end
     5: begin
         case(pixel_index_2)
-        5143 - i: oled_data_2 <= 16'b1111111111111111;
-        5144 - i: oled_data_2 <= 16'b1111111111111111;
-        5145 - i: oled_data_2 <= 16'b1111111111111111;
-        5238 - i: oled_data_2 <= 16'b1111111111111111;
-        5335 - i: oled_data_2 <= 16'b1111111111111111;
-        5336 - i: oled_data_2 <= 16'b1111111111111111;
-        5337 - i: oled_data_2 <= 16'b1111111111111111;
-        5433 - i: oled_data_2 <= 16'b1111111111111111;
-        5526 - i: oled_data_2 <= 16'b1111111111111111;
-        5527 - i: oled_data_2 <= 16'b1111111111111111;
-        5528 - i: oled_data_2 <= 16'b1111111111111111;
-        5529 - i: oled_data_2 <= 16'b1111111111111111;
+        5143 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5144 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5145 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5238 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5335 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5336 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5337 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5433 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5526 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5527 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5528 - row_shift: oled_data_2 <= 16'b1111111111111111;
+        5529 - row_shift: oled_data_2 <= 16'b1111111111111111;
         endcase
     end
     endcase
     end
+    
+    if (isTurnOn2) begin
+    case(weights_2)
+        1: begin
+            case(pixel_index_2)
+            5142 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - 2*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end
+    
+    if (isTurnOn3) begin
+    case(weights_3)
+        1: begin
+            case(pixel_index_2)
+            5142 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - 3*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end
+
+    if (isTurnOn4) begin
+    case(weights_4)
+        1: begin
+            case(pixel_index_2)
+            5142 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - 4*row_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end
+    
+    if (isTurnOn5) begin
+    case(weights_5)
+        1: begin
+            case(pixel_index_2)
+            5142 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end    
+    
+    if (isTurnOn6) begin
+    case(weights_6)
+        1: begin
+            case(pixel_index_2)
+            5142 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end    
+    
+    if (isTurnOn7) begin
+    case(weights_7)
+        1: begin
+            case(pixel_index_2)
+            5142 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - 2*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end   
+    
+    if (isTurnOn8) begin
+    case(weights_8)
+        1: begin
+            case(pixel_index_2)
+            5142 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - 3*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end  
+    
+    
+    if (isTurnOn9) begin
+    case(weights_9)
+        1: begin
+            case(pixel_index_2)
+            5142 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        2: begin
+            case(pixel_index_2)
+            5142 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5143 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        3: begin
+            case(pixel_index_2)
+            5143 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5430 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        4: begin
+            case(pixel_index_2)
+            5143 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5239 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5240 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5241 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5431 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5432 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+        5: begin
+            case(pixel_index_2)
+            5143 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5144 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5145 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5238 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5335 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5336 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5337 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5433 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5526 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5527 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5528 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            5529 - 4*row_shift - column_shift: oled_data_2 <= 16'b1111111111111111;
+            endcase
+        end
+    endcase
+    end          
     
     end
 endmodule
