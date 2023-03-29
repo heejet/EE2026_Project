@@ -21,7 +21,7 @@ module Top_Student (
     inout ps2_clk,  
     inout ps2_data,
     input [15:0] sw,
-    output reg led15,
+//    output reg led15,
     output [7:0] JC,
     output [7:0] JA,
     output reg [3:0] an,
@@ -30,7 +30,7 @@ module Top_Student (
     input J_MIC3_Pin3, 
     output J_MIC3_Pin1,
     output J_MIC3_Pin4,
-    output reg [7:0] led
+    output reg [15:0] led
     );
     
 //////////////////////////////////////////////////////////////////////////////////
@@ -184,18 +184,35 @@ module Top_Student (
 //////////////////////////////////////////////////////////////////////////////////
 // Student A: Audio Input Task
 //////////////////////////////////////////////////////////////////////////////////
-    reg [11:0] MIC_in_IA = 0;
-    wire [7:0] seg_IA;
-    wire [3:0] an_IA;
-    wire [8:0] led_IA;
+//    wire [7:0] seg_IA;
+//    wire [3:0] an_IA;
+//    wire [8:0] led_IA;
     
-    Audio_In_Individual_Task IA (
-        .clk_sampleinterval(clk_sampleinterval),
-        .MIC_in(MIC_in),
-        .an(an_IA),
-        .seg(seg_IA),
-        .led(led_IA)
+//    Audio_In_Individual_Task IA (
+//        .MIC_in(MIC_in),
+//        .basys_clock(clk_sampleinterval),
+//        .J_MIC3_Pin3(J_MIC3_Pin3),
+//        .an(an_IA),
+//        .led(led_IA),
+//        .seg(seg_IA)
+//    );
+
+    wire [3:0] an_IA;
+    wire [6:0] seg_IA;
+    wire [15:0] led_IA;
+    wire [15:0] oled_data_IA;
+
+Student_A IA(
+    .basys_clock(basys_clock),
+    .MIC_in(MIC_in),
+    .SW15(sw[15]),
+    .pixel_index(pixel_index_1),
+    .an(an_IA),
+    .seg(seg_IA),
+    .led(led_IA),
+    .oled_data(oled_data_IA)
     );
+    
 //////////////////////////////////////////////////////////////////////////////////
 // Student B: Audio Output Task
 //////////////////////////////////////////////////////////////////////////////////
@@ -326,6 +343,27 @@ module Top_Student (
         .oled_data_1(oled_data_UG_1),
         .oled_data_2(oled_data_UG_2)
     );
+    
+//////////////////////////////////////////////////////////////////////////////////
+// Library Simulator
+//////////////////////////////////////////////////////////////////////////////////
+    
+//    wire [15:0] led_indiv;
+//    wire [3:0] an_indiv;
+//    wire [6:0] seg_indiv;
+//    wire [15:0] oled_data_sb;
+    
+//    Sound_Bar SB(    
+//        .MIC_in(MIC_in),
+//        .basys_clock(basys_clock),
+//        .J_MIC3_Pin3(J_MIC3_Pin3), 
+//        .pixel_index(pixel_index_1),
+//        .an(an_indiv),
+//        .led(led_indiv),
+//        .seg(seg_indiv),
+//        .oled_data(oled_data_sb)
+//    );    
+    
 
 //////////////////////////////////////////////////////////////////////////////////
 // Main Menu
@@ -420,11 +458,10 @@ module Top_Student (
                 seg <= 7'b1111_111;
             end
             INDIVIDUAL_A: begin
-                oled_data_1 <= 0;
-                MIC_in_IA <= MIC_in;
+                oled_data_1 <= oled_data_IA;
+                led <= led_IA;
                 an <= an_IA;
                 seg <= seg_IA;
-                led[7:0] <= led_IA;
                 current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_A;
             end
             INDIVIDUAL_B: begin
@@ -446,7 +483,7 @@ module Top_Student (
                 oled_data_1 <= oled_data_GT;
                 an <= an_GT;
                 seg <= seg_GT;
-                led15 <= led15_GT;
+                led[15] <= led15_GT;
                 audio_out <= audio_out_GT;
                 current_state <= (debounced_btnD) ? GROUP_MENU : GROUP_TASK;
             end
@@ -470,7 +507,7 @@ module Top_Student (
                 an <= directed_an;
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
-                led15 <= directed_is_cyclic;
+                led[15] <= directed_is_cyclic;
                 current_state <= (btnC) ? GRAPH_MENU : DIRECTED_GRAPH;
             end
             UNDIRECTED_GRAPH: begin
