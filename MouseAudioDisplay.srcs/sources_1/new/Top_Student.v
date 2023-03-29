@@ -285,7 +285,7 @@ module Top_Student (
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(debounced_left),
-        .reset_btn(debounced_btnD),
+        .reset_btn(debounced_btnU),
         .pixel_index(pixel_index_1),
         .an(an_SIU),
         .seg(seg_SIU),
@@ -425,18 +425,22 @@ module Top_Student (
                 an <= an_IA;
                 seg <= seg_IA;
                 led[7:0] <= led_IA;
+                current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_A;
             end
             INDIVIDUAL_B: begin
                 oled_data_1 <= 0;
                 audio_out <= audio_out_IB;
+                current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_B;
             end
             INDIVIDUAL_C: begin
                 oled_data_1 <= oled_data_IC;
                 an <= an_IC;
                 seg <= seg_IC;
+                current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_C;
             end
             INDIVIDUAL_D: begin
                 oled_data_1 <= oled_data_ID;
+                current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_D;
             end
             GROUP_TASK: begin
                 oled_data_1 <= oled_data_GT;
@@ -444,11 +448,13 @@ module Top_Student (
                 seg <= seg_GT;
                 led15 <= led15_GT;
                 audio_out <= audio_out_GT;
+                current_state <= (debounced_btnD) ? GROUP_MENU : GROUP_TASK;
             end
             SIU: begin
                 oled_data_1 <= oled_data_SIU;
                 an <= an_SIU;
                 seg <= seg_SIU;
+                current_state <= (debounced_btnD) ? GROUP_MENU2 : SIU;
             end
             GROUP_MENU: begin
                 oled_data_1 <= oled_data_GM;
@@ -465,6 +471,7 @@ module Top_Student (
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
                 led15 <= directed_is_cyclic;
+                current_state <= (btnC) ? GRAPH_MENU : DIRECTED_GRAPH;
             end
             UNDIRECTED_GRAPH: begin
                 oled_data_1 <= oled_data_UG_1;
@@ -472,6 +479,7 @@ module Top_Student (
                 an <= undirected_an;
                 seg [6:0] <= undirected_seg;
                 seg[7] <= 1;
+                current_state <= (btnC) ? GRAPH_MENU : UNDIRECTED_GRAPH;
             end
             default: begin
                 oled_data_1 <= 0;
