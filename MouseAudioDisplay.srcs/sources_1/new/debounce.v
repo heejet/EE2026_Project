@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 02/27/2023 09:26:30 AM
+// Create Date: 13.03.2023 11:50:15
 // Design Name: 
-// Module Name: clock20hz
+// Module Name: debounce
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,14 +20,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module clock20hz (input CLOCK, output reg SLOW_CLOCK = 0
-
+module debounce(
+    input clock, 
+    input input_signal, 
+    output output_signal
     );
+    wire Q_1, QB_1, Q_2, QB_2;
     
-    reg [31:0] count = 0;
+    D_FF ff_1 (.clk(clock), .D(input_signal), .Q(Q_1), .QB(QB_1));
+    D_FF ff_2 (.clk(clock), .D(Q_1), .Q(Q_2), .QB(QB_2));
     
-    always @ (posedge CLOCK) begin
-        count <= (count == 2499) ? 0 : count + 1;
-        SLOW_CLOCK <= (count == 0)? ~SLOW_CLOCK : SLOW_CLOCK;
-    end
+    assign output_signal = Q_1 & QB_2;
+    
 endmodule

@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 02/27/2023 11:00:40 AM
+// Create Date: 18.03.2023 09:42:01
 // Design Name: 
-// Module Name: custom_clock
+// Module Name: D_FF
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,14 +20,14 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module custom_clock (input CLOCK, input [31:0] m, output reg SLOW_CLOCK = 0
-
+module D_FF(
+    input clk,
+    input D,
+    output reg Q,
+    output reg QB
     );
-    
-    reg [31:0] count = 0;
-    
-    always @ (posedge CLOCK) begin
-        count <= (count == m) ? 0 : count + 1;
-        SLOW_CLOCK <= (count == 0)? ~SLOW_CLOCK : SLOW_CLOCK;
+    always @ (posedge clk) begin
+        Q <= D;
+        QB <= ~D;
     end
 endmodule
