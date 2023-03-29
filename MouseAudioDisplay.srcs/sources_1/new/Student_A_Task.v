@@ -50,40 +50,40 @@ module Student_A_Task (
             peak_value <= MIC_in;
         end
         if (count >= 4000) begin // 4000 * 50 * 10^-6  = 0.2s
-            if (peak_value > 3825 && peak_value <= 4095) begin
+            if (peak_value > 3860 && peak_value <= 4095) begin
                 seg <= 7'b0000000; // 8
                 led <= 9'b011111111;
             end
-            else if (peak_value > 3550 && peak_value <= 3825) begin
+            else if (peak_value > 3630 && peak_value <= 3860) begin
                 seg <= 7'b1111000; // 7
                 led <= 9'b001111111;
             end
-            else if (peak_value > 3275 && peak_value <= 3550) begin
+            else if (peak_value > 3400 && peak_value <= 3630) begin
                 seg <= 7'b0000010; // 6
                 led <= 9'b000111111;
             end
-            else if (peak_value > 3000 && peak_value <= 3275) begin
+            else if (peak_value > 3170 && peak_value <= 3400) begin
                 seg <= 7'b0010010; // 5
                 led <= 9'b000011111;
             end
-            else if (peak_value > 2725 && peak_value <= 3000) begin
+            else if (peak_value > 2940 && peak_value <= 3170) begin
                 seg <= 7'b0011001; // 4
                 led <= 9'b000001111;
             end
-            else if (peak_value > 2450 && peak_value <= 2725) begin
+            else if (peak_value > 2710 && peak_value <= 2940) begin
                 seg <= 7'b0110000; // 3
                 led <= 9'b000000111;
             end
-            else if (peak_value > 2175 && peak_value <= 2450) begin
+            else if (peak_value > 2480 && peak_value <= 2710) begin
                 seg <= 7'b0100100; // 2
                 led <= 9'b00000011;
             end
-            else if (peak_value > 1900 && peak_value <= 2175) begin
+            else if (peak_value > 2250 && peak_value <= 2480) begin
                 seg <= 7'b1111001; // 1
                 led <= 9'b000000001;
             end
             else begin
-                seg <= 7'b0000001; // 0
+                seg <= 7'b1000000; // 0
                 led <= 9'b000000000;
             end
             count <= 0;
