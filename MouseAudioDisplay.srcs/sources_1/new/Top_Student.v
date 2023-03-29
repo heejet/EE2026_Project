@@ -23,6 +23,7 @@ module Top_Student (
     input [15:0] sw,
     output reg led15,
     output [7:0] JC,
+    output [7:0] JA,
     output reg [3:0] an,
     output reg [7:0] seg,
     output [3:0] JXADC,
@@ -94,23 +95,23 @@ module Top_Student (
         .output_signal(debounced_center)
     );
 //////////////////////////////////////////////////////////////////////////////////
-// Set up OLED
+// Set up OLED 1
 ////////////////////////////////////////////////////////////////////////////////// 
     wire clk25mhz;
     clk_divider my_clk25mhz(.basys_clk(basys_clock), .m(1), .new_clk(clk25mhz));
     
-    reg [15:0] oled_data = 0;
-    wire frame_begin, sending_pixels, sample_pixel;
-    wire [12:0] pixel_index;
+    reg [15:0] oled_data_1 = 0;
+    wire frame_begin_1, sending_pixels_1, sample_pixel_1;
+    wire [12:0] pixel_index_1;
     
     Oled_Display oled_unit_one(
         .clk(clk25mhz), 
         .reset(0), 
-        .frame_begin(frame_begin), 
-        .sending_pixels(sending_pixels), 
-        .sample_pixel(sample_pixel), 
-        .pixel_index(pixel_index), 
-        .pixel_data(oled_data), 
+        .frame_begin(frame_begin_1), 
+        .sending_pixels(sending_pixels_1), 
+        .sample_pixel(sample_pixel_1), 
+        .pixel_index(pixel_index_1), 
+        .pixel_data(oled_data_1), 
         .cs(JC[0]), 
         .sdin(JC[1]), 
         .sclk(JC[3]), 
@@ -119,6 +120,29 @@ module Top_Student (
         .vccen(JC[6]),
         .pmoden(JC[7])
     );
+//////////////////////////////////////////////////////////////////////////////////
+// Set up OLED 2
+////////////////////////////////////////////////////////////////////////////////// 
+        reg [15:0] oled_data_2 = 0;
+        wire frame_begin_2, sending_pixels_2, sample_pixel_2;
+        wire [12:0] pixel_index_2;
+        
+        Oled_Display oled_unit_two(
+            .clk(clk25mhz), 
+            .reset(0), 
+            .frame_begin(frame_begin_2), 
+            .sending_pixels(sending_pixels_2), 
+            .sample_pixel(sample_pixel_2), 
+            .pixel_index(pixel_index_2), 
+            .pixel_data(oled_data_2), 
+            .cs(JA[0]), 
+            .sdin(JA[1]), 
+            .sclk(JA[3]), 
+            .d_cn(JA[4]), 
+            .resn(JA[5]), 
+            .vccen(JA[6]),
+            .pmoden(JA[7])
+        );
 //////////////////////////////////////////////////////////////////////////////////
 // Set up Audio Output
 //////////////////////////////////////////////////////////////////////////////////
@@ -202,7 +226,7 @@ module Top_Student (
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(debounced_left), 
         .mouse_center_btn(debounced_center), 
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .sw0(sw[0]),
         .sw1(sw[1]),
         .an(an_IC),
@@ -222,7 +246,7 @@ module Top_Student (
         .sw1(sw[1]),
         .sw2(sw[2]),
         .sw3(sw[3]),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .oled_data(oled_data_ID)
     );
 //////////////////////////////////////////////////////////////////////////////////
@@ -242,7 +266,7 @@ module Top_Student (
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(debounced_left), 
         .btnC(btnC),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .led15(led15_GT),
         .an(an_GT),
         .seg(seg_GT),
@@ -262,7 +286,7 @@ module Top_Student (
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(debounced_left),
         .reset_btn(debounced_btnD),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .an(an_SIU),
         .seg(seg_SIU),
         .oled_data(oled_data_SIU)
@@ -286,6 +310,8 @@ module Top_Student (
         .is_cyclic(directed_is_cyclic)
     );
     
+    wire [15:0] oled_data_UG_1, oled_data_UG_2;
+    
     Undirected show_undirected_graph(
         .basys_clock(basys_clock),
         .sw(sw),
@@ -293,8 +319,12 @@ module Top_Student (
         .btnD(debounced_btnD),
         .btnL(debounced_btnL),
         .btnR(debounced_btnR),
+        .pixel_index_1(pixel_index_1),
+        .pixel_index_2(pixel_index_2),
         .seg(undirected_seg),
-        .an(undirected_an)
+        .an(undirected_an),
+        .oled_data_1(oled_data_UG_1),
+        .oled_data_2(oled_data_UG_2)
     );
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -306,7 +336,7 @@ module Top_Student (
         .clk25mhz(clk25mhz),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .oled_data(oled_data_MM)
     );
     
@@ -314,28 +344,28 @@ module Top_Student (
         .clk25mhz(clk25mhz),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .oled_data(oled_data_IM)
     );
     Display_Group_Menu GM(
         .clk25mhz(clk25mhz),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .oled_data(oled_data_GM)
     );
     Display_Group_Menu2 GM2(
         .clk25mhz(clk25mhz),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .oled_data(oled_data_GM2)
     );
     Display_Graph_Menu GRAPH(
         .clk25mhz(clk25mhz),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
-        .pixel_index(pixel_index),
+        .pixel_index(pixel_index_1),
         .oled_data(oled_data_GRAPH)
     );
 //////////////////////////////////////////////////////////////////////////////////
@@ -380,70 +410,72 @@ module Top_Student (
         
         case (current_state)
             MAIN_MENU: begin
-                oled_data <= oled_data_MM;
+                oled_data_1 <= oled_data_MM;
                 an <= 4'b1111;
                 seg <= 7'b1111_111;
             end
             INDIVIDUAL_MENU: begin
-                oled_data <= oled_data_IM;
+                oled_data_1 <= oled_data_IM;
                 an <= 4'b1111;
                 seg <= 7'b1111_111;
             end
             INDIVIDUAL_A: begin
-                oled_data <= 0;
+                oled_data_1 <= 0;
                 MIC_in_IA <= MIC_in;
                 an <= an_IA;
                 seg <= seg_IA;
                 led[7:0] <= led_IA;
             end
             INDIVIDUAL_B: begin
-                oled_data <= 0;
+                oled_data_1 <= 0;
                 audio_out <= audio_out_IB;
             end
             INDIVIDUAL_C: begin
-                oled_data <= oled_data_IC;
+                oled_data_1 <= oled_data_IC;
                 an <= an_IC;
                 seg <= seg_IC;
             end
             INDIVIDUAL_D: begin
-                oled_data <= oled_data_ID;
+                oled_data_1 <= oled_data_ID;
             end
             GROUP_TASK: begin
-                oled_data <= oled_data_GT;
+                oled_data_1 <= oled_data_GT;
                 an <= an_GT;
                 seg <= seg_GT;
                 led15 <= led15_GT;
                 audio_out <= audio_out_GT;
             end
             SIU: begin
-                oled_data <= oled_data_SIU;
+                oled_data_1 <= oled_data_SIU;
                 an <= an_SIU;
                 seg <= seg_SIU;
             end
             GROUP_MENU: begin
-                oled_data <= oled_data_GM;
+                oled_data_1 <= oled_data_GM;
             end
             GROUP_MENU2: begin
-                oled_data <= oled_data_GM2;
+                oled_data_1 <= oled_data_GM2;
             end
             GRAPH_MENU: begin
-                oled_data <= oled_data_GRAPH;
+                oled_data_1 <= oled_data_GRAPH;
             end
             DIRECTED_GRAPH: begin
-                oled_data <= 0;
+                oled_data_1 <= 0;
                 an <= directed_an;
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
                 led15 <= directed_is_cyclic;
             end
             UNDIRECTED_GRAPH: begin
-                oled_data <= 0;
+                oled_data_1 <= oled_data_UG_1;
+                oled_data_2 <= oled_data_UG_2;
                 an <= undirected_an;
                 seg [6:0] <= undirected_seg;
                 seg[7] <= 1;
             end
             default: begin
-                oled_data <= 0;
+                oled_data_1 <= 0;
+                oled_data_2 <= 0;
             end
         endcase
     end

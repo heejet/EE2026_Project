@@ -33,10 +33,23 @@ module BF_5_Nodes(
     output reg [31:0] dist_3,
     output reg [31:0] dist_4,
     output reg [6:0] seg,
-    output reg [3:0] an
+    output reg [3:0] an,
+    output reg [31:0] pointer = 0,
+    output [31:0] weights_0, weights_1, weights_2, weights_3, weights_4, weights_5, weights_6, weights_7, weights_8, weights_9
     );
+    
     reg [9:0] weights [0:31];
-    reg [31:0] pointer = 0;
+
+    assign weights_0 = weights[0];
+    assign weights_1 = weights[1];
+    assign weights_2 = weights[2];
+    assign weights_3 = weights[3];
+    assign weights_4 = weights[4];
+    assign weights_5 = weights[5];
+    assign weights_6 = weights[6];
+    assign weights_7 = weights[7];
+    assign weights_8 = weights[8];
+    assign weights_9 = weights[9];
     
     wire [6:0] label_tens, label_ones, weight_tens, weight_ones;
     
