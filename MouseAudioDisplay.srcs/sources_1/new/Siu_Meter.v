@@ -195,6 +195,7 @@ module Siu_Meter(
                 isGameWon <= 0;
                 isGameLost <= 0;
                 meter <= 0;
+                game_over_count <= 0;
             end
             
             if (isGameWon) begin

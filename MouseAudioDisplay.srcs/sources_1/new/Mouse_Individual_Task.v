@@ -27,9 +27,10 @@ module Mouse_Individual_Task(
     input [10:0] cursor_y_raw,
     input [6:0] cursor_x_pos,
     input [5:0] cursor_y_pos,
+    input mouse_left_btn,
     input mouse_center_btn,
     input [12:0] pixel_index,
-    input sw0,
+    input sw0, sw1,
     output reg [3:0] an,
     output reg [7:0] seg,
     output reg [10:0] bound_x,
@@ -41,7 +42,7 @@ module Mouse_Individual_Task(
     parameter [31:0] bound_x_slow = 474;
     parameter [31:0] bound_y_slow = 314;
     
-    wire [15:0] oled_cursor_1_data, oled_cursor_2_data, oled_cursor_1_slowed_data, oled_cursor_2_slowed_data;
+    wire [15:0] oled_cursor_1_data, oled_cursor_2_data, oled_cursor_1_slowed_data, oled_cursor_2_slowed_data, whac_a_mole_oled_data;
     
     wire [10:0] cursor_x_slow;
     wire [10:0] cursor_y_slow;
@@ -89,6 +90,16 @@ module Mouse_Individual_Task(
         .cursor_y_out(cursor_y_slow)
     );
     
+    Whac_A_Mole whac_a_mole (
+        .basys_clock(basys_clock),
+        .clk25mhz(clk25mhz),
+        .mouse_left_button(mouse_left_btn),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .pixel_index(pixel_index),
+        .oled_data(whac_a_mole_oled_data)
+    );
+    
     wire [7:0] x_normal_tens, x_normal_ones, y_normal_tens, y_normal_ones, x_slow_tens, x_slow_ones, y_slow_tens, y_slow_ones;
     
     Show_Coords get_x_normal (
@@ -122,47 +133,56 @@ module Mouse_Individual_Task(
     reg [31:0] count = 0;
     
     always @ (posedge basys_clock) begin
-        if (mouse_center_btn) begin
-            toggle <= toggle + 1;
-        end
-        if (sw0) begin
-            bound_x <= bound_x_slow;
-            bound_y <= bound_y_slow;
-            oled_data <= (toggle == 0) ?  oled_cursor_1_slowed_data :  oled_cursor_2_slowed_data;
-            display_x_tens <= x_slow_tens;
-            display_x_ones <= x_slow_ones;
-            display_y_tens <= y_slow_tens;
-            display_y_ones <= y_slow_ones;
+        if (sw1) begin
+            bound_x <= bound_x_normal - 1;
+            bound_y <= bound_y_normal;
+            oled_data <= whac_a_mole_oled_data;
+            seg <= 8'b11111111;
+            an <= 4'b1111;
         end
         else begin
-            bound_x <= bound_x_normal;
-            bound_y <= bound_y_normal;
-            oled_data <= (toggle == 0) ?  oled_cursor_1_data :  oled_cursor_2_data;
-            display_x_tens <= x_normal_tens;
-            display_x_ones <= x_normal_ones;
-            display_y_tens <= y_normal_tens;
-            display_y_ones <= y_normal_ones;
+            if (mouse_center_btn) begin
+                toggle <= toggle + 1;
+            end
+            if (sw0) begin
+                bound_x <= bound_x_slow;
+                bound_y <= bound_y_slow;
+                oled_data <= (toggle == 0) ?  oled_cursor_1_slowed_data :  oled_cursor_2_slowed_data;
+                display_x_tens <= x_slow_tens;
+                display_x_ones <= x_slow_ones;
+                display_y_tens <= y_slow_tens;
+                display_y_ones <= y_slow_ones;
+            end
+            else begin
+                bound_x <= bound_x_normal;
+                bound_y <= bound_y_normal;
+                oled_data <= (toggle == 0) ?  oled_cursor_1_data :  oled_cursor_2_data;
+                display_x_tens <= x_normal_tens;
+                display_x_ones <= x_normal_ones;
+                display_y_tens <= y_normal_tens;
+                display_y_ones <= y_normal_ones;
+            end
+            
+            count <= (count == 249999) ? 0 : count + 1;
+            step <= (count == 0) ? (step == 3) ? 0 : step + 1 : step;
+            case (step)
+                0: begin
+                    seg <= display_x_tens;
+                    an <= 4'b0111;
+                end
+                1: begin
+                    seg <= display_x_ones;
+                    an <= 4'b1011;
+                end
+                2: begin
+                    seg <= display_y_tens;
+                    an <= 4'b1101;
+                end
+                3: begin
+                    seg <= display_y_ones;
+                    an <= 4'b1110;
+                end
+            endcase
         end
-        
-        count <= (count == 249999) ? 0 : count + 1;
-        step <= (count == 0) ? (step == 3) ? 0 : step + 1 : step;
-        case (step)
-            0: begin
-                seg <= display_x_tens;
-                an <= 4'b0111;
-            end
-            1: begin
-                seg <= display_x_ones;
-                an <= 4'b1011;
-            end
-            2: begin
-                seg <= display_y_tens;
-                an <= 4'b1101;
-            end
-            3: begin
-                seg <= display_y_ones;
-                an <= 4'b1110;
-            end
-        endcase
     end
 endmodule
