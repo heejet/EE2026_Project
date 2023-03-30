@@ -21,7 +21,6 @@ module Top_Student (
     inout ps2_clk,  
     inout ps2_data,
     input [15:0] sw,
-//    output reg led15,
     output [7:0] JC,
     output [7:0] JA,
     output reg [3:0] an,
@@ -314,6 +313,8 @@ Student_A IA(
     wire [6:0] directed_seg, undirected_seg;
     wire [3:0] directed_an, undirected_an;
     wire directed_is_cyclic;
+    wire directed_is_connected;
+    wire directed_is_tree;
     
     Directed show_directed_graph(
         .basys_clock(basys_clock),
@@ -324,7 +325,9 @@ Student_A IA(
         .btnR(debounced_btnR),
         .seg(directed_seg),
         .an(directed_an),
-        .is_cyclic(directed_is_cyclic)
+        .is_cyclic(directed_is_cyclic),
+        .is_connected(directed_is_connected),
+        .is_tree(directed_is_tree)
     );
     
     wire [15:0] oled_data_UG_1, oled_data_UG_2;
@@ -508,6 +511,8 @@ Student_A IA(
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
                 led[15] <= directed_is_cyclic;
+                led[14] <= directed_is_connected;
+                led[13] <= directed_is_tree;
                 current_state <= (btnC) ? GRAPH_MENU : DIRECTED_GRAPH;
             end
             UNDIRECTED_GRAPH: begin
