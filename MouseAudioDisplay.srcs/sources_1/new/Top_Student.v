@@ -275,16 +275,21 @@ Student_A IA(
     );
 //////////////////////////////////////////////////////////////////////////////////
 // Student D: Display Task
-//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////    
     wire [15:0] oled_data_ID;
     
-    Oled_Individual_Task ID (
+    Student_D ID (
+        .basys_clock(basys_clock),
         .clk25mhz(clk25mhz),
         .sw0(sw[0]),
         .sw1(sw[1]),
         .sw2(sw[2]),
         .sw3(sw[3]),
+        .sw15(sw[15]),
         .pixel_index(pixel_index_1),
+        .cursor_x_pos(cursor_x_pos),
+        .cursor_y_pos(cursor_y_pos),
+        .mouse_left_btn(left), // CANNOT USE DEBOUNCED MOUSE HERE!!!
         .oled_data(oled_data_ID)
     );
 //////////////////////////////////////////////////////////////////////////////////
