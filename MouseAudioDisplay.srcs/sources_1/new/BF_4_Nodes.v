@@ -32,7 +32,8 @@ module BF_4_Nodes(
     output reg [31:0] dist_2,
     output reg [31:0] dist_3,
     output reg [6:0] seg,
-    output reg [3:0] an
+    output reg [3:0] an,
+    output reg is_connected
 );
     reg [31:0] weights [0:31];
     reg [31:0] pointer = 0;
@@ -132,6 +133,12 @@ module BF_4_Nodes(
                 dist_1 <= dist[1];
                 dist_2 <= dist[2];
                 dist_3 <= dist[3];
+                if (dist[1] >= 99 || dist[2] >= 99 || dist[3] >= 99) begin
+                    is_connected <= 0;
+                end
+                else begin
+                    is_connected <= 1;
+                end
             end
         end
         // Set weights

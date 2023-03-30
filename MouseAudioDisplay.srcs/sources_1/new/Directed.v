@@ -26,11 +26,18 @@ module Directed(
     input btnU, btnD, btnL, btnR,
     output reg [6:0] seg,
     output reg [3:0] an,
-    output is_cyclic
+    output is_cyclic,
+    output is_connected,
+    output is_tree
     );
     wire [31:0] dist_0, dist_1, dist_2, dist_3;
     wire [6:0] set_weights_seg;
     wire [3:0] set_weights_an;
+    wire is_cyclic_temp, is_connected_temp;
+    
+    assign is_tree = ~is_cyclic_temp & is_connected_temp;
+    assign is_cyclic = is_cyclic_temp;
+    assign is_connected = is_connected_temp;
     
     BF_4_Nodes bellman_ford_4_nodes  (
         .basys_clock(basys_clock), 
@@ -44,13 +51,14 @@ module Directed(
         .dist_2(dist_2), 
         .dist_3(dist_3), 
         .seg(set_weights_seg),
-        .an(set_weights_an)
+        .an(set_weights_an),
+        .is_connected(is_connected_temp)
     );
     
     Cycle_Detection cycle_detection (
         .basys_clock(basys_clock),
         .sw(sw),
-        .is_cyclic(is_cyclic)
+        .is_cyclic(is_cyclic_temp)
     );
     
     reg [31:0] count = 0;
