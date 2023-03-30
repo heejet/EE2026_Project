@@ -343,6 +343,8 @@ Student_A IA(
     wire directed_is_connected;
     wire directed_is_tree;
     
+    wire [15:0] oled_data_DG_1, oled_data_DG_2;
+    
     Directed show_directed_graph(
         .basys_clock(basys_clock),
         .sw(sw),
@@ -350,8 +352,12 @@ Student_A IA(
         .btnD(debounced_btnD),
         .btnL(debounced_btnL),
         .btnR(debounced_btnR),
+        .pixel_index_1(pixel_index_1),
+        .pixel_index_2(pixel_index_2),
         .seg(directed_seg),
         .an(directed_an),
+        .oled_data_1(oled_data_DG_1),
+        .oled_data_2(oled_data_DG_2),
         .is_cyclic(directed_is_cyclic),
         .is_connected(directed_is_connected),
         .is_tree(directed_is_tree)
@@ -536,7 +542,8 @@ Student_A IA(
                 oled_data_1 <= oled_data_GRAPH;
             end
             DIRECTED_GRAPH: begin
-                oled_data_1 <= 0;
+                oled_data_1 <= oled_data_DG_1;
+                oled_data_2 <= oled_data_DG_2;
                 an <= directed_an;
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
