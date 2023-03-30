@@ -21,10 +21,7 @@ module Top_Student (
     inout ps2_clk,  
     inout ps2_data,
     input [15:0] sw,
-<<<<<<< HEAD
     output reg [15:0] led,
-=======
->>>>>>> 1b9ce1a2b5bbd2e4f90239bd6f554aa08b465b6a
     output [7:0] JC,
     output [7:0] JA,
     output reg [3:0] an,
@@ -32,13 +29,7 @@ module Top_Student (
     output [3:0] JXADC,
     input J_MIC3_Pin3, 
     output J_MIC3_Pin1,
-<<<<<<< HEAD
     output J_MIC3_Pin4
-    //output reg [7:0] led
-=======
-    output J_MIC3_Pin4,
-    output reg [15:0] led
->>>>>>> 1b9ce1a2b5bbd2e4f90239bd6f554aa08b465b6a
     );
     
 //////////////////////////////////////////////////////////////////////////////////
@@ -545,11 +536,8 @@ Student_A IA(
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
                 led[15] <= directed_is_cyclic;
-<<<<<<< HEAD
-=======
                 led[14] <= directed_is_connected;
                 led[13] <= directed_is_tree;
->>>>>>> 1b9ce1a2b5bbd2e4f90239bd6f554aa08b465b6a
                 current_state <= (btnC) ? GRAPH_MENU : DIRECTED_GRAPH;
             end
             UNDIRECTED_GRAPH: begin

@@ -224,54 +224,54 @@ module Audio_out_improvement(
 
     
     
-    reg [11:0] temp_C1 = 12'b000000100000;
-    reg [11:0] temp_C2 = 12'b000000100000;
-    reg [11:0] temp_C3 = 12'b000000100000;
-    reg [11:0] temp_C4 = 12'b000000100000;
-    reg [11:0] temp_C5 = 12'b000000100000;
-    reg [11:0] temp_C6 = 12'b000000100000;
+    reg [11:0] temp_C1 = 12'b100000000000;
+    reg [11:0] temp_C2 = 12'b100000000000;
+    reg [11:0] temp_C3 = 12'b100000000000;
+    reg [11:0] temp_C4 = 12'b100000000000;
+    reg [11:0] temp_C5 = 12'b100000000000;
+    reg [11:0] temp_C6 = 12'b100000000000;
     
-    reg [11:0] temp_D1 = 12'b000000100000;
-    reg [11:0] temp_D2 = 12'b000000100000;
-    reg [11:0] temp_D3 = 12'b000000100000;
-    reg [11:0] temp_D4 = 12'b000000100000;
-    reg [11:0] temp_D5 = 12'b000000100000;
-    reg [11:0] temp_D6 = 12'b000000100000;
+    reg [11:0] temp_D1 = 12'b100000000000;
+    reg [11:0] temp_D2 = 12'b100000000000;
+    reg [11:0] temp_D3 = 12'b100000000000;
+    reg [11:0] temp_D4 = 12'b100000000000;
+    reg [11:0] temp_D5 = 12'b100000000000;
+    reg [11:0] temp_D6 = 12'b100000000000;
     
-    reg [11:0] temp_E1 = 12'b000000100000;
-    reg [11:0] temp_E2 = 12'b000000100000;
-    reg [11:0] temp_E3 = 12'b000000100000;
-    reg [11:0] temp_E4 = 12'b000000100000;
-    reg [11:0] temp_E5 = 12'b000000100000;
-    reg [11:0] temp_E6 = 12'b000000100000;
+    reg [11:0] temp_E1 = 12'b100000000000;
+    reg [11:0] temp_E2 = 12'b100000000000;
+    reg [11:0] temp_E3 = 12'b100000000000;
+    reg [11:0] temp_E4 = 12'b100000000000;
+    reg [11:0] temp_E5 = 12'b100000000000;
+    reg [11:0] temp_E6 = 12'b100000000000;
     
-    reg [11:0] temp_F1 = 12'b000000100000;
-    reg [11:0] temp_F2 = 12'b000000100000;
-    reg [11:0] temp_F3 = 12'b000000100000;
-    reg [11:0] temp_F4 = 12'b000000100000;
-    reg [11:0] temp_F5 = 12'b000000100000;
-    reg [11:0] temp_F6 = 12'b000000100000;
+    reg [11:0] temp_F1 = 12'b100000000000;
+    reg [11:0] temp_F2 = 12'b100000000000;
+    reg [11:0] temp_F3 = 12'b100000000000;
+    reg [11:0] temp_F4 = 12'b100000000000;
+    reg [11:0] temp_F5 = 12'b100000000000;
+    reg [11:0] temp_F6 = 12'b100000000000;
     
-    reg [11:0] temp_G1 = 12'b000000100000;
-    reg [11:0] temp_G2 = 12'b000000100000;
-    reg [11:0] temp_G3 = 12'b000000100000;
-    reg [11:0] temp_G4 = 12'b000000100000;
-    reg [11:0] temp_G5 = 12'b000000100000;
-    reg [11:0] temp_G6 = 12'b000000100000;
+    reg [11:0] temp_G1 = 12'b100000000000;
+    reg [11:0] temp_G2 = 12'b100000000000;
+    reg [11:0] temp_G3 = 12'b100000000000;
+    reg [11:0] temp_G4 = 12'b100000000000;
+    reg [11:0] temp_G5 = 12'b100000000000;
+    reg [11:0] temp_G6 = 12'b100000000000;
     
-    reg [11:0] temp_A1 = 12'b000000100000;
-    reg [11:0] temp_A2 = 12'b000000100000;
-    reg [11:0] temp_A3 = 12'b000000100000;
-    reg [11:0] temp_A4 = 12'b000000100000;
-    reg [11:0] temp_A5 = 12'b000000100000;
-    reg [11:0] temp_A6 = 12'b000000100000;
+    reg [11:0] temp_A1 = 12'b100000000000;
+    reg [11:0] temp_A2 = 12'b100000000000;
+    reg [11:0] temp_A3 = 12'b100000000000;
+    reg [11:0] temp_A4 = 12'b100000000000;
+    reg [11:0] temp_A5 = 12'b100000000000;
+    reg [11:0] temp_A6 = 12'b100000000000;
     
-    reg [11:0] temp_B1 = 12'b000000100000;
-    reg [11:0] temp_B2 = 12'b000000100000;
-    reg [11:0] temp_B3 = 12'b000000100000;
-    reg [11:0] temp_B4 = 12'b000000100000;
-    reg [11:0] temp_B5 = 12'b000000100000;
-    reg [11:0] temp_B6 = 12'b000000100000;
+    reg [11:0] temp_B1 = 12'b100000000000;
+    reg [11:0] temp_B2 = 12'b100000000000;
+    reg [11:0] temp_B3 = 12'b100000000000;
+    reg [11:0] temp_B4 = 12'b100000000000;
+    reg [11:0] temp_B5 = 12'b100000000000;
+    reg [11:0] temp_B6 = 12'b100000000000;
     
     
     wire C1;
@@ -376,171 +376,171 @@ module Audio_out_improvement(
     
     
     always @ (posedge C1) begin
-        temp_C1 <= (temp_C1 == 12'b000000100000) ? 0 : 12'b000000100000;    
+        temp_C1 <= (temp_C1 == 12'b100000000000) ? 0 : 12'b100000000000;    
     end
     
     always @ (posedge C2) begin
-        temp_C2 <= (temp_C2 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_C2 <= (temp_C2 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge C3) begin
-        temp_C3 <= (temp_C3 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_C3 <= (temp_C3 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge C4) begin
-        temp_C4 <= (temp_C4 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_C4 <= (temp_C4 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge C5) begin
-        temp_C5 <= (temp_C5 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_C5 <= (temp_C5 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge C6) begin
-        temp_C6 <= (temp_C6 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_C6 <= (temp_C6 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge D1) begin
-        temp_D1 <= (temp_D1 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_D1 <= (temp_D1 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge D2) begin
-        temp_D2 <= (temp_D2 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_D2 <= (temp_D2 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge D3) begin
-        temp_D3 <= (temp_D3 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_D3 <= (temp_D3 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge D4) begin
-        temp_D4 <= (temp_D4 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_D4 <= (temp_D4 == 12'b100000000000) ? 0 : 12'b100000000000;   
     end
     
     always @ (posedge D5) begin
-        temp_D5 <= (temp_D5 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_D5 <= (temp_D5 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge D6) begin
-        temp_D6 <= (temp_D6 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_D6 <= (temp_D6 == 12'b100000000000) ? 0 : 12'b100000000000;   
     end
     
     always @ (posedge E1) begin
-        temp_E1 <= (temp_E1 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_E1 <= (temp_E1 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge E2) begin
-        temp_E2 <= (temp_E2 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_E2 <= (temp_E2 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge E3) begin
-        temp_E3 <= (temp_E3 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_E3 <= (temp_E3 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge E4) begin
-        temp_E4 <= (temp_E4 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_E4 <= (temp_E4 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge E5) begin
-        temp_E5 <= (temp_E5 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_E5 <= (temp_E5 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge E6) begin
-        temp_E6 <= (temp_E6 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_E6 <= (temp_E6 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge F1) begin
-        temp_F1 <= (temp_F1 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_F1 <= (temp_F1 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge F2) begin
-        temp_F2 <= (temp_F2 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_F2 <= (temp_F2 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge F3) begin
-        temp_F3 <= (temp_F3 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_F3 <= (temp_F3 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge F4) begin
-        temp_F4 <= (temp_F4 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_F4 <= (temp_F4 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge F5) begin
-        temp_F5 <= (temp_F5 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_F5 <= (temp_F5 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge F6) begin
-        temp_F6 <= (temp_F6 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_F6 <= (temp_F6 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge G1) begin
-        temp_G1 <= (temp_G1 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_G1 <= (temp_G1 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge G2) begin
-        temp_G2 <= (temp_G2 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_G2 <= (temp_G2 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge G3) begin
-        temp_G3 <= (temp_G3 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_G3 <= (temp_G3 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge G4) begin
-        temp_G4 <= (temp_G4 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_G4 <= (temp_G4 == 12'b100000000000) ? 0 : 12'b100000000000;   
     end
     
     always @ (posedge G5) begin
-        temp_G5 <= (temp_G5 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_G5 <= (temp_G5 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge G6) begin
-        temp_G6 <= (temp_G6 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_G6 <= (temp_G6 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge A1) begin
-        temp_A1 <= (temp_A1 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_A1 <= (temp_A1 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge A2) begin
-        temp_A2 <= (temp_A2 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_A2 <= (temp_A2 == 12'b100000000000) ? 0 : 12'b100000000000; 
     end
     
     always @ (posedge A3) begin
-        temp_A3 <= (temp_A3 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_A3 <= (temp_A3 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge A4) begin
-        temp_A4 <= (temp_A4 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_A4 <= (temp_A4 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge A5) begin
-        temp_A5 <= (temp_A5 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_A5 <= (temp_A5 == 12'b100000000000) ? 0 : 12'b100000000000;   
     end
     
     always @ (posedge A6) begin
-        temp_A6 <= (temp_A6 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_A6 <= (temp_A6 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge B1) begin
-        temp_B1 <= (temp_B1 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_B1 <= (temp_B1 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge B2) begin
-        temp_B2 <= (temp_B2 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_B2 <= (temp_B2 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge B3) begin
-        temp_B3 <= (temp_B3 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_B3 <= (temp_B3 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge B4) begin
-        temp_B4 <= (temp_B4 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_B4 <= (temp_B4 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge B5) begin
-        temp_B5 <= (temp_B5 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_B5 <= (temp_B5 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     always @ (posedge B6) begin
-        temp_B6 <= (temp_B6 == 12'b000000100000) ? 0 : 12'b000000100000;  
+        temp_B6 <= (temp_B6 == 12'b100000000000) ? 0 : 12'b100000000000;  
     end
     
     
