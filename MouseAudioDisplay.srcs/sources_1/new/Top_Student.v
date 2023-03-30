@@ -21,7 +21,7 @@ module Top_Student (
     inout ps2_clk,  
     inout ps2_data,
     input [15:0] sw,
-    output reg led15,
+    output reg [15:0] led,
     output [7:0] JC,
     output [7:0] JA,
     output reg [3:0] an,
@@ -29,8 +29,8 @@ module Top_Student (
     output [3:0] JXADC,
     input J_MIC3_Pin3, 
     output J_MIC3_Pin1,
-    output J_MIC3_Pin4,
-    output reg [7:0] led
+    output J_MIC3_Pin4
+    //output reg [7:0] led
     );
     
 //////////////////////////////////////////////////////////////////////////////////
@@ -200,12 +200,34 @@ module Top_Student (
 // Student B: Audio Output Task
 //////////////////////////////////////////////////////////////////////////////////
     wire [11:0] audio_out_IB;
+    wire [3:0] an_IB;
+    wire [7:0] seg_IB;
+    wire [15:0] led_IB;
     
     Audio_Out_Individual_Task IB (
         .basys_clock(basys_clock),
-        .sw0(sw[0]),
+//        .sw0(sw[0]),
+//        .btnC(btnC),
+//        .audio_out_final(audio_out_IB)
+        .sw(sw),
+        .led(led_IB),
         .btnC(btnC),
-        .audio_out_final(audio_out_IB)
+        .btnU(btnU),
+        .btnD(btnD),
+        .an(an_IB),
+        .seg(seg_IB),
+        .btnL(btnL),
+        .audio_out(audio_out_IB)
+//            input basys_clock,
+//        input [15:0] sw,
+//        output [15:0] led
+//        ,input btnC
+//        ,input btnU
+//        ,input btnD
+//        ,output [3:0] an
+//        ,output [7:0] seg
+//        ,input btnL
+//        ,output audio_out
     );
 //////////////////////////////////////////////////////////////////////////////////
 // Student C: Computer Mouse Task
@@ -430,7 +452,10 @@ module Top_Student (
             INDIVIDUAL_B: begin
                 oled_data_1 <= 0;
                 audio_out <= audio_out_IB;
-                current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_B;
+                an <= an_IB;
+                seg <= seg_IB;
+                led[15:0] <= led_IB;
+                current_state <= (debounced_btnR) ? INDIVIDUAL_MENU : INDIVIDUAL_B;
             end
             INDIVIDUAL_C: begin
                 oled_data_1 <= oled_data_IC;
@@ -446,7 +471,7 @@ module Top_Student (
                 oled_data_1 <= oled_data_GT;
                 an <= an_GT;
                 seg <= seg_GT;
-                led15 <= led15_GT;
+                led[15] <= led15_GT;
                 audio_out <= audio_out_GT;
                 current_state <= (debounced_btnD) ? GROUP_MENU : GROUP_TASK;
             end
@@ -470,7 +495,7 @@ module Top_Student (
                 an <= directed_an;
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
-                led15 <= directed_is_cyclic;
+                led[15] <= directed_is_cyclic;
                 current_state <= (btnC) ? GRAPH_MENU : DIRECTED_GRAPH;
             end
             UNDIRECTED_GRAPH: begin
