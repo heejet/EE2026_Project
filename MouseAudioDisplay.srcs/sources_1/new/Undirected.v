@@ -31,12 +31,12 @@ module Undirected(
     output reg [15:0] oled_data_1,
     output reg [15:0] oled_data_2
     );
-    wire [31:0] dist_0, dist_1, dist_2, dist_3, dist_4;
+    wire [10:0] dist_0, dist_1, dist_2, dist_3, dist_4;
     wire [6:0] set_weights_seg;
     wire [3:0] set_weights_an;
     
-    wire [31:0] pointer;
-    wire [31:0] weights_0, weights_1, weights_2, weights_3, weights_4, weights_5, weights_6, weights_7, weights_8, weights_9;
+    wire [3:0] pointer;
+    wire [2:0] weights_0, weights_1, weights_2, weights_3, weights_4, weights_5, weights_6, weights_7, weights_8, weights_9;
 
     BF_5_Nodes bellman_ford_5_nodes (
         .basys_clock(basys_clock),

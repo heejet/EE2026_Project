@@ -27,18 +27,18 @@ module BF_4_Nodes(
     input btnR,
     input btnU,
     input btnD,
-    output reg [31:0] dist_0,
-    output reg [31:0] dist_1,
-    output reg [31:0] dist_2,
-    output reg [31:0] dist_3,
+    output reg [10:0] dist_0,
+    output reg [10:0] dist_1,
+    output reg [10:0] dist_2,
+    output reg [10:0] dist_3,
     output reg [6:0] seg,
     output reg [3:0] an,
     output reg is_connected,
-    output reg [31:0] pointer = 0,
+    output reg [3:0] pointer = 0,
     output [2:0] weights_0, weights_1, weights_2, weights_3, weights_4, weights_5, weights_6, weights_7, weights_8, weights_9
 );
-    reg [31:0] weights [0:31];
-    //reg [31:0] pointer = 0;
+    reg [9:0] weights [0:9];
+
     assign weights_0 = weights[0];
     assign weights_1 = weights[1];
     assign weights_2 = weights[2];
@@ -55,11 +55,11 @@ module BF_4_Nodes(
     show_weight j (.weight(pointer), .seg_tens(label_tens), .seg_ones(label_ones));
     
     reg [31:0] count_display = 0;
-    reg [31:0] step_display = 0;
+    reg [3:0] step_display = 0;
     
-    reg [31:0] dist [0:31];
+    reg [10:0] dist [0:10];
     
-    reg [31:0] step = 1;
+    reg [3:0] step = 1;
     
     initial begin
         dist[0] = 0;

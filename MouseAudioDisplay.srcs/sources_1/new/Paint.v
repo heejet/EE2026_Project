@@ -22,17 +22,21 @@
 
 module Paint(
     input basys_clock,
-    input sw0, sw1,
+    input [15:0] sw,
     input clk25mhz,
     input [12:0] pixel_index,
     input [6:0] cursor_x_pos,
     input [5:0] cursor_y_pos,
     input mouse_left_btn,
+    input mouse_right_btn,
+    input mouse_center_btn,
+    input isUsingPaint,
     output reg [15:0] oled_data
 );
    
     parameter WHITE = 16'hFFFF;
     parameter RED = 16'hF800;
+    parameter PINK = 16'b1111100000010010;
     
     // Declare the BRAM
     (* ram_style = "block" *)
@@ -46,14 +50,41 @@ module Paint(
     
     wire [12:0] pixel_index_mouse;
         
-    assign pixel_index_mouse = (cursor_y_pos * 96) + (cursor_x_pos); 
+    assign pixel_index_mouse = (cursor_y_pos * 96) + (cursor_x_pos);
+    
+    reg erase = 0;
+    reg colour = 0;
+    
+    always @ (posedge basys_clock) begin
+        if (mouse_right_btn) begin
+            erase <= ~erase;
+        end
+        else if (mouse_center_btn) begin
+            colour <= ~colour;
+        end
+    end
         
     always @ (posedge clk25mhz) begin
-        if ((x == cursor_x_pos && y == cursor_y_pos) || 
+        if (!erase && !colour &&
+           (((x == cursor_x_pos && y == cursor_y_pos) || 
            (x == cursor_x_pos + 1 && y == cursor_y_pos)||
            (x == cursor_x_pos && y == cursor_y_pos + 1) ||
-           (x == cursor_x_pos + 1 && y == cursor_y_pos + 1)) begin
+           (x == cursor_x_pos + 1 && y == cursor_y_pos + 1)))) begin
            oled_data <= RED;
+        end
+        else if (erase &&
+                (((x == cursor_x_pos && y == cursor_y_pos) || 
+                (x == cursor_x_pos + 1 && y == cursor_y_pos)||
+                (x == cursor_x_pos && y == cursor_y_pos + 1) ||
+                (x == cursor_x_pos + 1 && y == cursor_y_pos + 1)))) begin
+           oled_data <= PINK;
+        end
+        else if (colour && !erase &&
+                (((x == cursor_x_pos && y == cursor_y_pos) || 
+                (x == cursor_x_pos + 1 && y == cursor_y_pos)||
+                (x == cursor_x_pos && y == cursor_y_pos + 1) ||
+                (x == cursor_x_pos + 1 && y == cursor_y_pos + 1)))) begin
+            oled_data <= sw;
         end
         else begin
             oled_data <= rom[pixel_index];
@@ -62,15 +93,17 @@ module Paint(
     
     // Update the rom
     always @ (posedge basys_clock) begin
-        if (mouse_left_btn && !sw0 && !sw1) begin
+        if (isUsingPaint) begin
+        if (mouse_left_btn && !colour && !erase) begin
             // save data into BRAM
             rom[pixel_index_mouse] <= WHITE;
         end
-        else if (mouse_left_btn && sw0) begin
+        else if (mouse_left_btn && erase) begin
             rom[pixel_index_mouse] <= 0;
         end
-        else if (mouse_left_btn && sw1) begin
-            rom[pixel_index_mouse] <= RED;
+        else if (mouse_left_btn && colour && !erase) begin
+            rom[pixel_index_mouse] <= sw;
+        end
         end
     end
     

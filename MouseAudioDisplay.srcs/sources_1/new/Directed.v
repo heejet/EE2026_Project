@@ -31,23 +31,21 @@ module Directed(
     output reg [15:0] oled_data_1,
     output reg [15:0] oled_data_2,
     output is_cyclic,
-    output is_connected,
-    output is_tree
+    output is_connected
 );
-    wire [31:0] dist_0, dist_1, dist_2, dist_3;
+    wire [10:0] dist_0, dist_1, dist_2, dist_3;
     wire [6:0] set_weights_seg;
     wire [3:0] set_weights_an;
     wire is_cyclic_temp, is_connected_temp;
-    wire [31:0] pointer;
+    wire [3:0] pointer;
 
-       wire [2:0] weights_0, weights_1, weights_2, weights_3, weights_4, weights_5, weights_6, weights_7, weights_8, weights_9;
+    wire [2:0] weights_0, weights_1, weights_2, weights_3, weights_4, weights_5, weights_6, weights_7, weights_8, weights_9;
     
-//    assign is_tree = ~is_cyclic_temp & is_connected_temp;
     assign is_cyclic = is_cyclic_temp;
     assign is_connected = is_connected_temp;
     
     BF_4_Nodes bellman_ford_4_nodes  (
-        .basys_clock(basys_clock), 
+        .basys_clock(basys_clock),
         .sw(sw[15:0]),
         .btnL(btnL),
         .btnR(btnR),
@@ -785,6 +783,7 @@ module Directed(
             end
             
     end
+    
     integer row_shift = 1152; // down one row
     integer column_shift = 45; // right three column
     
@@ -2653,9 +2652,5 @@ module Directed(
     end          
     
     end
-
-
-
-
 
 endmodule

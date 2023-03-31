@@ -36,14 +36,14 @@ module Siu_Meter(
     parameter RED = 16'hF800;
     
     // Initialises wire for frame BRAMs
-    wire [15:0] oled_SMF2, oled_SMF3, oled_SMF4, oled_SMF5, oled_SMF6, oled_SMF7, oled_SMF8, oled_SMF9, oled_SMF10;
+    wire [15:0] oled_SMF1, oled_SMF2, oled_SMF3, oled_SMF4, oled_SMF5, oled_SMF6, oled_SMF7, oled_SMF8, oled_SMF9, oled_SMF10;
     
     // Initialises BRAMs for all frames
-//    SM_Frame1 SMF1 (
-//        .CLOCK(basys_clock),
-//        .address(pixel_index),
-//        .data_out(oled_SMF1)
-//    );
+    SM_Frame1 SMF1 (
+        .CLOCK(basys_clock),
+        .address(pixel_index),
+        .data_out(oled_SMF1)
+    );
     
     SM_Frame2 SMF2 (
         .CLOCK(basys_clock),
@@ -105,7 +105,7 @@ module Siu_Meter(
     assign x = (pixel_index % 96); // from 0 to 95
     assign y = (pixel_index / 96); // from 0 to 63
 
-    reg [31:0] meter = 0;
+    reg [3:0] meter = 0;
     reg [31:0] count = 0;
     reg [31:0] game_over_count = 0;
     reg isGameEnd = 0;
@@ -149,7 +149,7 @@ module Siu_Meter(
             case (meter)
                     0: begin
                         seg <= 7'b1000000;
-                        oled_data <= oled_SMF2;
+                        oled_data <= oled_SMF1;
                     end
                     1: begin
                         seg <= 7'b1111001;        

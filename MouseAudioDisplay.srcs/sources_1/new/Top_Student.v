@@ -3,10 +3,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //  FILL IN THE FOLLOWING INFORMATION:
-//  STUDENT A NAME: 
-//  STUDENT B NAME:
-//  STUDENT C NAME: 
-//  STUDENT D NAME:  
+//  STUDENT A NAME: Nikhil Shashidhar
+//  STUDENT B NAME: Nicholas Goh Maowen
+//  STUDENT C NAME: Ong Hee Jet
+//  STUDENT D NAME: Ong Chuan Kai
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -276,20 +276,30 @@ Student_A IA(
 //////////////////////////////////////////////////////////////////////////////////
 // Student D: Display Task
 //////////////////////////////////////////////////////////////////////////////////    
+     wire debounced_right;
+
+    debounce debounce_mouse_right_btn (
+        .clock(basys_clock), 
+        .input_signal(right), 
+        .output_signal(debounced_right)
+    );
+    
     wire [15:0] oled_data_ID;
+    
+    reg isUsingPaint = 0;
     
     Student_D ID (
         .basys_clock(basys_clock),
         .clk25mhz(clk25mhz),
-        .sw0(sw[0]),
-        .sw1(sw[1]),
-        .sw2(sw[2]),
-        .sw3(sw[3]),
-        .sw15(sw[15]),
+        .sw(sw),
         .pixel_index(pixel_index_1),
         .cursor_x_pos(cursor_x_pos),
         .cursor_y_pos(cursor_y_pos),
         .mouse_left_btn(left), // CANNOT USE DEBOUNCED MOUSE HERE!!!
+        .mouse_right_btn(debounced_right),
+        .mouse_center_btn(debounced_center),
+        .btnU(debounced_btnU),
+        .isUsingPaint(isUsingPaint),
         .oled_data(oled_data_ID)
     );
 //////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +351,6 @@ Student_A IA(
     wire [3:0] directed_an, undirected_an;
     wire directed_is_cyclic;
     wire directed_is_connected;
-    wire directed_is_tree;
     
     wire [15:0] oled_data_DG_1, oled_data_DG_2;
     
@@ -359,8 +368,7 @@ Student_A IA(
         .oled_data_1(oled_data_DG_1),
         .oled_data_2(oled_data_DG_2),
         .is_cyclic(directed_is_cyclic),
-        .is_connected(directed_is_connected),
-        .is_tree(directed_is_tree)
+        .is_connected(directed_is_connected)
     );
     
     wire [15:0] oled_data_UG_1, oled_data_UG_2;
@@ -485,61 +493,110 @@ Student_A IA(
         case (current_state)
             MAIN_MENU: begin
                 oled_data_1 <= oled_data_MM;
+                oled_data_2 <= 0;
                 an <= 4'b1111;
-                seg <= 7'b1111_111;
+                seg <= 8'b1111_1111;
+                audio_out <= 0;
+                led <= 0;
+                isUsingPaint <= 0;
             end
             INDIVIDUAL_MENU: begin
                 oled_data_1 <= oled_data_IM;
+                oled_data_2 <= 0;
                 an <= 4'b1111;
-                seg <= 7'b1111_111;
+                seg <= 8'b1111_1111;
+                audio_out <= 0;
+                led <= 0;
+                isUsingPaint <= 0;
             end
             INDIVIDUAL_A: begin
                 oled_data_1 <= oled_data_IA;
+                oled_data_2 <= 0;
                 led <= led_IA;
                 an <= an_IA;
                 seg <= seg_IA;
+                seg[7] <= 1;
+                audio_out <= 0;
                 current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_A;
+                isUsingPaint <= 0;
             end
             INDIVIDUAL_B: begin
                 oled_data_1 <= 0;
+                oled_data_2 <= 0;
                 audio_out <= audio_out_IB;
                 an <= an_IB;
                 seg <= seg_IB;
-                led[15:0] <= led_IB;
+                led <= led_IB;
                 current_state <= (debounced_btnR) ? INDIVIDUAL_MENU : INDIVIDUAL_B;
+                isUsingPaint <= 0;
             end
             INDIVIDUAL_C: begin
                 oled_data_1 <= oled_data_IC;
+                oled_data_2 <= 0;
+                audio_out <= 0;
                 an <= an_IC;
                 seg <= seg_IC;
+                led <= 0;
                 current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_C;
+                isUsingPaint <= 0;
             end
             INDIVIDUAL_D: begin
                 oled_data_1 <= oled_data_ID;
+                oled_data_2 <= 0;
+                audio_out <= 0;
+                an <= 4'b1111;
+                seg <= 8'b1111_1111;
+                led <= 0;
+                isUsingPaint <= 1;
                 current_state <= (debounced_btnD) ? INDIVIDUAL_MENU : INDIVIDUAL_D;
             end
             GROUP_TASK: begin
                 oled_data_1 <= oled_data_GT;
+                oled_data_2 <= 0;
+                audio_out <= audio_out_GT;
                 an <= an_GT;
                 seg <= seg_GT;
+                led[14:0] <= 0;
                 led[15] <= led15_GT;
-                audio_out <= audio_out_GT;
                 current_state <= (debounced_btnD) ? GROUP_MENU : GROUP_TASK;
+                isUsingPaint <= 0;
             end
             SIU: begin
                 oled_data_1 <= oled_data_SIU;
+                oled_data_2 <= 0;
+                audio_out <= 0;
                 an <= an_SIU;
                 seg <= seg_SIU;
+                led <= 0;
                 current_state <= (debounced_btnD) ? GROUP_MENU2 : SIU;
+                isUsingPaint <= 0;
             end
             GROUP_MENU: begin
                 oled_data_1 <= oled_data_GM;
+                oled_data_2 <= 0;
+                audio_out <= 0;
+                an <= 4'b1111;
+                seg <= 8'b1111_1111;
+                led <= 0;
+                isUsingPaint <= 0;
             end
             GROUP_MENU2: begin
                 oled_data_1 <= oled_data_GM2;
+                oled_data_2 <= 0;
+                audio_out <= 0;
+                an <= 4'b1111;
+                seg <= 8'b1111_1111;
+                led <= 0;
+                isUsingPaint <= 0;
             end
             GRAPH_MENU: begin
                 oled_data_1 <= oled_data_GRAPH;
+                oled_data_2 <= 0;
+                audio_out <= 0;
+                an <= 4'b1111;
+                seg <= 8'b1111_1111;
+                led <= 0;
+                isUsingPaint <= 0;
             end
             DIRECTED_GRAPH: begin
                 oled_data_1 <= oled_data_DG_1;
@@ -547,10 +604,11 @@ Student_A IA(
                 an <= directed_an;
                 seg [6:0] <= directed_seg;
                 seg[7] <= 1;
+                led[13:0] <= 0;
                 led[15] <= directed_is_cyclic;
                 led[14] <= directed_is_connected;
-                led[13] <= directed_is_tree;
                 current_state <= (btnC) ? GRAPH_MENU : DIRECTED_GRAPH;
+                isUsingPaint <= 0;
             end
             UNDIRECTED_GRAPH: begin
                 oled_data_1 <= oled_data_UG_1;
@@ -559,10 +617,17 @@ Student_A IA(
                 seg [6:0] <= undirected_seg;
                 seg[7] <= 1;
                 current_state <= (btnC) ? GRAPH_MENU : UNDIRECTED_GRAPH;
+                led <= 0;
+                isUsingPaint <= 0;
             end
             default: begin
                 oled_data_1 <= 0;
                 oled_data_2 <= 0;
+                audio_out <= 0;
+                led <= 0;
+                an <= 4'b1111;
+                seg <= 8'b11111111;
+                isUsingPaint <= 0;
             end
         endcase
     end
